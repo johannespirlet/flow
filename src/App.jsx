@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from './components/Navbar';
@@ -33,28 +33,6 @@ export default function App() {
     localStorage.clear();
     setIsLoggedIn(false);
   };
-
-  useEffect(() => {
-      fetch("http://localhost:5000/userData", {
-          method: "POST",
-          crossDomain: true,
-          headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify({
-              token: window.localStorage.getItem("token")
-          }),
-      }).then((res) => res.json())
-          .then((data) => {
-              if (data.data == "token abgelaufen") {
-                  alert("Token abgelaufen - melde dich erneut an");
-                  handleLogout;
-                  navigate("flow/auth/sign-in");
-              }
-          });
-  }, []);
 
   return <>
     <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />

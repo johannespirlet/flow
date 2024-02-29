@@ -19,7 +19,7 @@ export default function SignUp() {
       //in allen anderen faellen, kein default submit/refresh sondern
       e.preventDefault();
       //poste zum backend das datenobjekt im json format
-      fetch("https://johannespirlet.github.io/flow/register", {
+      fetch("./register", {
         method: "POST",
         crossDomain: true,
         headers: {

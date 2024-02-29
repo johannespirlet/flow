@@ -17,7 +17,7 @@ export default class Reset extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { email } = this.state; //fange email auf
-        fetch("https://johannespirlet.github.io/flow/forgot-password", {
+        fetch("./forgot-password", {
             method: "POST",
             crossDomain: true,
             headers: {

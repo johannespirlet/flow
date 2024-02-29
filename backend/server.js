@@ -79,7 +79,7 @@ app.post("/login-user", async (req, res) => {
     //identitaet von user und dessen daten zu schuetzen
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
       //setze ablauf auf 15 minuten
-      expiresIn: "1m",
+      expiresIn: "15m",
     });
     //wenn antwort ok, speichere token in data-schluessel des verpackten antwortobjekts
     if (res.status(201)) {
@@ -144,7 +144,7 @@ app.post("/forgot-password", async (req, res) => {
       expiresIn: "5m",
     });
     //freischalt link fuer mail inkl user id und token
-    const link = `https://johannespirlet.github.io/flow/${oldUser._id}/${token}`;
+    const link = `./${oldUser._id}/${token}`;
     console.log(link);
 //nodemailer erlaubt email von node.js aus zu senden
      let transporter = nodemailer.createTransport({
