@@ -1,0 +1,25 @@
+.formContainer {
+  text-align: center;
+  width: 20rem;
+  margin-inline: auto;
+  margin-top: 3rem;
+}
+
+.formContainer > * {
+  margin-block: 1rem;
+}
+
+.formContainer input[type="radio"], .formContainer input[type="checkbox"] {
+  margin-inline: 0.5rem;
+}
+
+.authContainer {
+  width: 100%;
+  text-align: center;
+}
+
+.authContainer > p {
+  color: red;
+  margin-block: 2rem;
+}
+

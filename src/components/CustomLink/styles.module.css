@@ -1,0 +1,7 @@
+ul li.active {
+    background-color: #555;
+}
+
+ul a:hover {
+    background-color: #777;
+}

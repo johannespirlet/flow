@@ -1,0 +1,19 @@
+.boardContainer {
+    background: #ececec;
+    display: flex;
+}
+
+.menuContainer nav {
+    width: 14rem;
+    height: 100%;
+    min-height: 100svh;
+}
+
+.contentContainer > article {
+    padding: 0;
+}
+
+.contentContainer {
+    padding: 2rem;
+}
+
