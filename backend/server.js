@@ -139,12 +139,12 @@ app.post("/forgot-password", async (req, res) => {
     }
     //baue neues secret aus rnd secret und dem verschluesseltem passwort
     const secret = JWT_SECRET + oldUser.password;
-    //baue token, mit email und id, signiert mit neuem secret und ablaufzeit von 5 min
+    //baue token, mit email und id, signiert mit neuem secret und ablaufzeit von 10 min
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-      expiresIn: "5m",
+      expiresIn: "10m",
     });
     //freischalt link fuer mail inkl user id und token
-    const link = `./${oldUser._id}/${token}`;
+    const link = `http://localhost:5000/reset-password/${oldUser._id}/${token}`;
     console.log(link);
 //nodemailer erlaubt email von node.js aus zu senden
      let transporter = nodemailer.createTransport({

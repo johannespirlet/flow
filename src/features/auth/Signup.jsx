@@ -19,7 +19,7 @@ export default function SignUp() {
       //in allen anderen faellen, kein default submit/refresh sondern
       e.preventDefault();
       //poste zum backend das datenobjekt im json format
-      fetch("./register", {
+      fetch("http://localhost:5000/register", {
         method: "POST",
         crossDomain: true,
         headers: {

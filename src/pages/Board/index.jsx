@@ -8,7 +8,7 @@ export default function Board() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("./userData", {
+        fetch("http://localhost:5000/userData", {
             method: "POST",
             crossDomain: true,
             headers: {

@@ -11,7 +11,7 @@ export default function Login({ handleLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
     //fetch api
-    fetch("https://johannespirlet.github.io/flow/auth/sign-in/login-user", {
+    fetch("http://localhost:5000/login-user", {
       method: "POST",
       crossDomain: true,
       headers: {

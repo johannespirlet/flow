@@ -17,7 +17,7 @@ export default class Reset extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { email } = this.state; //fange email auf
-        fetch("./forgot-password", {
+        fetch("http://localhost:5000/forgot-password", {
             method: "POST",
             crossDomain: true,
             headers: {
