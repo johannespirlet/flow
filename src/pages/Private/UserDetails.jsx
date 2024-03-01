@@ -28,9 +28,7 @@ export default function UserDetails() {
       .then((res) => res.json()) //gib body als promise mit json content zurueck
       .then((data) => {
         //falls userType aus Daten admin ist, setze Admin true
-        if (data.data.userType == "Admin") {
-          setAdmin(true);
-        }
+        if(data.data.userType == "Admin") setAdmin(true);
         //belege Zustand mit Daten
         setUserData(data.data);
       });

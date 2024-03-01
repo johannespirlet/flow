@@ -4,7 +4,7 @@ import styles from './auth.module.css';
 
 export default function Login({ handleLogin }) {
   
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("guest");
   const [password, setPassword] = useState("");
   
   //submit postet anfrage mit email und passwort an backend
@@ -88,17 +88,11 @@ export default function Login({ handleLogin }) {
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="../sign-up">Sign Up</Link>
           </p>
-          <div className="d-grid">
-            <p>or</p>
-          </div>
-          <div className="d-grid">
-
-          </div>
         </form>
-        <button onClick={handleLogin} className="btn btn-secondary">
-              Sign In as Guest User
-            </button>
-        <p>This is an educational project. Please do not enter any confidential information.</p>
+        <button onClick={handleSubmit} className="btn btn-secondary">
+          Sign In as Guest User
+        </button>
+        <p>This is an educational project with low security. Please do not enter any confidential information.</p>
       </div>
   );
 }

@@ -135,7 +135,7 @@ export default function SignUp() {
           Already registered <Link to="../sign-in">sign in?</Link>
         </p>
       </form>
-      <p>This is an educational project. Please do not enter any confidential information.</p>
+      <p>This is an educational project with low security. Please do not enter any confidential information.</p>
     </div>
   );
 }

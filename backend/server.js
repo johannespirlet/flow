@@ -68,6 +68,11 @@ app.post("/register", async (req, res) => {
 app.post("/login-user", async (req, res) => {
   //dekonstruiere anfrage body, daraus email und pw
   const { email, password } = req.body;
+  //falls guest user return status ok mit 'guest' als data
+  if(email == 'guest' && res.status(201)) {
+    const user = { fname: 'Guestuser', lname: '', userType: 'Guest'};
+    return res.send({ status: "ok", data: JSON.stringify(user)});
+  }
   //suche wieder ueber email ob user vorhanden und logge ggf objekt mit error
   const user = await User.findOne({ email });
   if (!user) {
@@ -96,6 +101,10 @@ app.post("/userData", async (req, res) => {
   //hole das token aus dem 
   const { token } = req.body;
   try {
+    //if data token includes the 'Guest'- User 
+    if(token.includes("Guest")) {
+      return res.json({ status: "ok", data: JSON.parse(token) });
+    }
     //verfiziere token mit secret, speichere userdaten = res des callback in "user"
     const user = jwt.verify(token, JWT_SECRET, (err, res) => {
       if (err) {
@@ -119,7 +128,7 @@ app.post("/userData", async (req, res) => {
       .catch((error) => {
         res.send({ status: "error", data: error });
       });
-  } catch (error) { }
+  } catch (error) {}
 });
 
 //starte Server auf Port 5000

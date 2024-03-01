@@ -1,12 +1,16 @@
 .formContainer {
   text-align: center;
   width: 20rem;
-  margin-inline: auto;
-  margin-top: 3rem;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: rgb(247, 247, 247);
+  -webkit-box-shadow: 3px 2px 25px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 2px 25px -7px rgba(0,0,0,0.75);
+  box-shadow: 3px 2px 25px -7px rgba(0,0,0,0.75);
 }
 
 .formContainer > * {
-  margin-block: 1rem;
+  margin-block: 1.5rem;
 }
 
 .formContainer input[type="radio"], .formContainer input[type="checkbox"] {

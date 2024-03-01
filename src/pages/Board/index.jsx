@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export default function Board() {
 
-    const navigate = useNavigate();
+     const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:5000/userData", {
@@ -23,7 +23,7 @@ export default function Board() {
             .then((data) => {
                 if (data.data == "token abgelaufen") {
                     alert("Token abgelaufen - melde dich erneut an");
-                    navigate("flow/auth/sign-in");
+                    navigate("auth/sign-in");
                 }
             });
     }, []);
