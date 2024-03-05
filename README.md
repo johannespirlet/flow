@@ -1,8 +1,14 @@
-# React + Vite
+# Flow 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Since GH Pages allows only static content, feel free to download flow to see all features.
 
-Currently, two official plugins are available:
+Run vite server with npm on localhost using
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- npm run dev (in root directory)
+
+and then navigate to './backend' and start express server via node with
+
+- node server.js
+
+Enjoy!
+
