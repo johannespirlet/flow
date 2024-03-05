@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from './auth.module.css';
 
-export default function Login({ handleLogin }) {
+export default function Login({ handleLogin, handleMessage }) {
   
   const [email, setEmail] = useState("guest");
   const [password, setPassword] = useState("");
+
+  const handleNotification = (messagetext, messagetype) => {
+    let notification = { 
+      messageText: messagetext,
+      messageType: messagetype
+    };
+    handleMessage(notification);
+  }
   
   //submit postet anfrage mit email und passwort an backend
   function handleSubmit(e) {
@@ -28,12 +36,11 @@ export default function Login({ handleLogin }) {
       .then((data) => {
         //falls status (aus backend ok) alert nachricht
         if (data.status == "ok") {
-          alert("login erfolgreich");
           //packe token und loggedIn(true) eintrag in storage
           window.localStorage.setItem("token", data.data);
           handleLogin();
           //und leite an userDetails weiter
-        } else alert("login nicht erfolgreich: ungueltige userdaten");
+        } else handleNotification("Invalid Userdata. Try again.", "negative");
       });
   }
 

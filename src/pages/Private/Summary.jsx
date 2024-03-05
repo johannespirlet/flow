@@ -1,5 +1,12 @@
-import UserDetails from "./UserDetails";
+import { useOutletContext } from "react-router-dom";
 
 export default function Summary() {
-    return <UserDetails />
-}
+
+    const userData = useOutletContext();
+
+    return (
+          <h1>
+            Welcome {userData.fname} {userData.lname}
+          </h1>
+    );
+  }

@@ -1,7 +1,7 @@
-ul li.active {
+.listItem.active {
     background-color: #555;
 }
 
-ul a:hover {
+.listItem a:hover {
     background-color: #777;
 }

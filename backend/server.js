@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer"; //vorerst auskommentiert
+//import nodemailer from "nodemailer"; //vorerst auskommentiert
 
 import "./userDetails.js";
 
@@ -56,6 +56,8 @@ app.post("/register", async (req, res) => {
       email,
       password: encryptedPassword,
       userType,
+      color: `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
+      phone: ""
     });
     //da post objekt erwartet, sende noch "ok" bzw "error" zurueck
     res.send({ status: "ok" });
@@ -144,7 +146,7 @@ app.post("/forgot-password", async (req, res) => {
     const oldUser = await User.findOne({ email });
     //falls nicht, sende json antwort mit status nachricht ins frontend
     if (!oldUser) {
-      return res.json({ status: "User existiert nicht" });
+      return res.json({ status: "err", data: "User doesn't exist" });
     }
     //baue neues secret aus rnd secret und dem verschluesseltem passwort
     const secret = JWT_SECRET + oldUser.password;
@@ -155,30 +157,34 @@ app.post("/forgot-password", async (req, res) => {
     //freischalt link fuer mail inkl user id und token
     const link = `http://localhost:5000/reset-password/${oldUser._id}/${token}`;
     console.log(link);
-//nodemailer erlaubt email von node.js aus zu senden
+/* //nodemailer erlaubt email von node.js aus zu senden
      let transporter = nodemailer.createTransport({
       //absender
       service: "gmail",
       auth: {
-        user: "jpirlet32@gmail.com",
-        pass: "9F55zat1g#"
+        user: "email@email.de",
+        pass: "password123"
       },
     });
     //empfaenger
     let mailOptions = {
-      from: "jpirlet32@gmail.com",
+      from: "jpirlet32@googlemail.com",
       to: `${oldUser.email}`,
       subject: "Password Reset",  //betreff
-      text: link    //nachricht
+      text: 'Click the ${link} to reset the password'    //nachricht
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
+        return res.json({ status: "err", data: "Error" });
+
       } else {
         console.log("Email sent: " + info.response);
+        return res.json({ status: "ok", data: "E-Mail sent with new Password Link" });
       }
-    });
+    }); */
+    return res.json({ status: "ok", data: "Nodemailer is disabled. The reset pw-link is logged in the terminal/console" });
   } catch (error) { }
 });
 //passwort-zuruecksetzen api soll link auffangen der in mail geklickt wird
@@ -266,5 +272,36 @@ app.post("/deleteUser", async (req, res) => {
     res.send({ status: "ok", data: "geloescht" });
   } catch (error) {
     console.log(error);
+  }
+});
+
+//registrier anfrage vom frontend als async funktion
+app.post("/addUser", async (req, res) => {
+  //dekonstruiere anfrageobjekt
+  const { fname, lname, email, password, userType, phoNumber, note } = req.body;
+  //versuche
+  try {
+    //ob es den user bereits in db gibt (anhang email eintrag)
+    const oldUser = await User.findOne({ email });
+    //dann schicke sofort error-objekt nach vorne
+    if (oldUser) {
+      return res.json({ error: "User gibt es bereits" });
+    }
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    //ansonsten baue User mit verschluesseltem pw zusammen
+    await User.create({
+      fname,
+      lname,
+      email,
+      password: encryptedPassword,
+      userType,
+      color: `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
+      phone: phoNumber,
+      note
+    });
+    //da post objekt erwartet, sende noch "ok" bzw "error" zurueck
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.send({ status: "error" });
   }
 });

@@ -11,7 +11,7 @@ export default class Reset extends Component {
         this.state = { //neue property { email } mit this.state uebergeben
             email: ""
         };
-        this.handleSubmit = this.handleSubmit.bind(this); //bindet funktion an klasse
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(e) {
@@ -29,9 +29,13 @@ export default class Reset extends Component {
         })
             .then((res) => res.json()
                 .then((data) => {
-                    alert(data.status);
-                }));
-    }
+                    const notification = { 
+                        messageText: data.data,
+                        messageType: data.status == "ok" ? "positive" : "negative"
+                      };
+                      this.props.handleMessage(notification);
+                    }))
+    };
 
     //render funktion mit return statt nur return bei funktions-komponente
     render() {

@@ -1,0 +1,79 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block: 1rem;
+}
+
+.headerContainer a {
+    padding-bottom: 2px;
+    margin-inline: 5px;
+}
+
+.headerContainer h1 {
+    display: inline;
+}
+
+.headerContainer svg {
+    margin: 0 0 3px 5px;
+}
+
+.contactContainer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.listItem {
+    list-style: none;
+}
+
+.listItem > p {
+    margin-block: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.listItem a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin: 0;
+    gap: 3rem;
+}
+
+.listItem a:hover {
+    background-color: var(--bs-gray-400);
+    border-radius: 10px;
+}
+
+.avatar {
+    border-radius: 50%;
+    height: 3.5rem;
+    width: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.info {
+    width: 12rem;
+}
+
+.phone {
+    width: 9rem;
+}
+
+.info p:nth-child(2) {
+    color: blue;
+}
+
+.role {
+    width: 5rem;
+    text-align: center;
+}
+
+.note {
+    width: 12rem;
+}

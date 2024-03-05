@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from './auth.module.css';
 
-export default function SignUp() {
+export default function SignUp({handleMessage}) {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
+  const navigate = useNavigate();
+
+  const handleNotification = (messagetext, messagetype) => {
+    let notification = { 
+      messageText: messagetext,
+      messageType: messagetype
+    };
+    handleMessage(notification);
+  }
 
   const handleSubmit = (e) => {
     //falls admin angegeben und secretKey nicht matcht, alert
     if (userType == "Admin" && secretKey != "2AdMiN2") {
       e.preventDefault();
-      alert("Ungueltiger Adminkey");
+      handleNotification("Invalid Adminkey", "negative");
     } else {
       //in allen anderen faellen, kein default submit/refresh sondern
       e.preventDefault();
@@ -39,9 +48,10 @@ export default function SignUp() {
         .then((data) => {
           //falls im backend alles ok ist, berichte darueber
           if (data.status == "ok") {
-            alert("Registrierung erfolgreich!");
+            handleNotification("Registrierung erfolgreich! You may sign in now.", "positive");
+            navigate("../sign-in");
           } else {
-            alert("User gibt es bereits. Bitte andere Eingaben verwenden!");
+            handleNotification("User gibt es bereits. Bitte andere Eingaben verwenden!", "negative");
           }
         });
     }

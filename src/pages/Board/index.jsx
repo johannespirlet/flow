@@ -1,35 +1,12 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import MenuBar from "../../components/MenuBar";
+import { Outlet } from "react-router-dom";
 import styles from "./styles.module.css";
-import { useEffect } from "react";
 
-export default function Board() {
+import MenuBar from "../../components/MenuBar";
 
-     const navigate = useNavigate();
-
-    useEffect(() => {
-        fetch("http://localhost:5000/userData", {
-            method: "POST",
-            crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                token: window.localStorage.getItem("token")
-            }),
-        }).then((res) => res.json())
-            .then((data) => {
-                if (data.data == "token abgelaufen") {
-                    alert("Token abgelaufen - melde dich erneut an");
-                    navigate("auth/sign-in");
-                }
-            });
-    }, []);
+export default function Board() {    
 
     return (
-    <main className={styles.boardContainer}>
+    <main className={styles.boardContainer} >
         <aside className={styles.menuContainer}>
             <MenuBar />
         </aside>
