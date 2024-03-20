@@ -104,7 +104,7 @@ export default function App() {
 					/>
 					<Route path="reset" element={<Reset handleMessage={setMessage} />} />
 				</Route>
-				<Route path="flow/*" element={<NotFound />} />
+				<Route path="/*" element={<NotFound />} />
 			</Routes>
 			<StatusMessage message={message} />
 		</>
