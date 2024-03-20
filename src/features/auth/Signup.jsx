@@ -1,151 +1,175 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './auth.module.css';
 
-export default function SignUp({handleMessage}) {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("");
-  const [secretKey, setSecretKey] = useState("");
-  const navigate = useNavigate();
+export default function SignUp({ handleMessage }) {
+	const [secretKey, setSecretKey] = useState('');
+	const [formData, setFormData] = useState({
+		fname: '',
+		lname: '',
+		email: '',
+		password: '',
+		userType: '',
+	});
+	const navigate = useNavigate();
 
-  const handleNotification = (messagetext, messagetype) => {
-    let notification = { 
-      messageText: messagetext,
-      messageType: messagetype
-    };
-    handleMessage(notification);
-  }
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
+	};
 
-  const handleSubmit = (e) => {
-    //falls admin angegeben und secretKey nicht matcht, alert
-    if (userType == "Admin" && secretKey != "2AdMiN2") {
-      e.preventDefault();
-      handleNotification("Invalid Adminkey", "negative");
-    } else {
-      //in allen anderen faellen, kein default submit/refresh sondern
-      e.preventDefault();
-      //poste zum backend das datenobjekt im json format
-      fetch("http://localhost:5000/register", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          fname,
-          email,
-          lname,
-          password,
-          userType,
-        }),
-      })//die antwort wird als json akzeptiert
-        .then((res) => res.json())
-        .then((data) => {
-          //falls im backend alles ok ist, berichte darueber
-          if (data.status == "ok") {
-            handleNotification("Registrierung erfolgreich! You may sign in now.", "positive");
-            navigate("../sign-in");
-          } else {
-            handleNotification("User gibt es bereits. Bitte andere Eingaben verwenden!", "negative");
-          }
-        });
-    }
-  };
+	const handleSubmit = (e) => {
+		if (formData.userType == 'Admin' && secretKey != '2AdMiN2') {
+			e.preventDefault();
+			handleMessage({
+				messageText: 'Ungültiger Adminkey',
+				messageType: 'negative',
+			});
+		} else {
+			e.preventDefault();
+			fetch('http://localhost:5000/register', {
+				method: 'POST',
+				crossDomain: true,
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify({
+					fname: formData.fname,
+					email: formData.email,
+					lname: formData.lname,
+					password: formData.password,
+					userType: formData.userType,
+				}),
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					if (data.status == 'ok') {
+						handleMessage({
+							messageText: 'Registrierung erfolgreich! You may sign in now.',
+							messageType: 'positive',
+						});
+						navigate('../sign-in');
+					} else {
+						handleMessage({
+							messageText:
+								'User gibt es bereits. Bitte andere Eingaben verwenden!',
+							messageType: 'negative',
+						});
+					}
+				});
+		}
+	};
 
-  return (
-    <div className={styles.authContainer}>
-      <form onSubmit={handleSubmit} className={styles.formContainer}>
-        <h3>Sign Up</h3>
-        <div>
-          Register As
-          <input
-            type="radio"
-            name="UserType"
-            value="User"
-            onChange={(e) => setUserType(e.target.value)}
-            required
-          />
-          User
-          <input
-            type="radio"
-            name="UserType"
-            value="Admin"
-            onChange={(e) => setUserType(e.target.value)}
-            required
-          />
-          Admin
-        </div>
-        {userType == "Admin" ? (
-          <div className="mb-3">
-            <label>Secret Key</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Secret Key"
-              onChange={(e) => setSecretKey(e.target.value)}
-            />
-          </div>
-        ) : null}
+	return (
+		<div className={styles.authContainer}>
+			<form onSubmit={handleSubmit} className={styles.formContainer}>
+				<h3>Sign Up</h3>
+				<div>
+					Register As
+					<input
+						type="radio"
+						id="user"
+						name="userType"
+						value="User"
+						onChange={handleChange}
+						required
+					/>
+					<label htmlFor="user">User</label>
+					<input
+						type="radio"
+						id="admin"
+						name="userType"
+						value="Admin"
+						onChange={handleChange}
+						required
+					/>
+					<label htmlFor="admin">Admin</label>
+				</div>
+				{formData.userType == 'Admin' ? (
+					<div className="mb-3">
+						<label htmlFor="secretKey">Secret Key</label>
+						<input
+							type="text"
+							name="secretKey"
+							id="secretKey"
+							className="form-control"
+							placeholder="Secret Key"
+							onChange={(e) => setSecretKey(e.target.value)}
+						/>
+					</div>
+				) : null}
 
-        <div className="mb-3">
-          <label>First name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="First name"
-            onChange={(e) => setFname(e.target.value)}
-            required
-          />
-        </div>
+				<div className="mb-3">
+					<label htmlFor="fname">First Name</label>
+					<input
+						type="text"
+						name="fname"
+						id="fname"
+						className="form-control"
+						placeholder="Enter First Name"
+						onChange={handleChange}
+						required
+					/>
+				</div>
 
-        <div className="mb-3">
-          <label>Last name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Last name"
-            onChange={(e) => setLname(e.target.value)}
-            required
-          />
-        </div>
+				<div className="mb-3">
+					<label htmlFor="lname">Last Name</label>
+					<input
+						type="text"
+						name="lname"
+						id="lname"
+						className="form-control"
+						placeholder="Enter Last Name"
+						onChange={handleChange}
+						required
+					/>
+				</div>
 
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+				<div className="mb-3">
+					<label htmlFor="email">E-Mail</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						className="form-control"
+						placeholder="Enter E-Mail Address"
+						onChange={handleChange}
+						autoComplete="email"
+						required
+					/>
+				</div>
 
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+				<div className="mb-3">
+					<label htmlFor="password">Password</label>
+					<input
+						type="password"
+						name="password"
+						id="password"
+						className="form-control"
+						placeholder="Enter Password"
+						onChange={handleChange}
+						required
+					/>
+				</div>
 
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
-        </div>
-        <p className="forgot-password text-right">
-          Already registered <Link to="../sign-in">sign in?</Link>
-        </p>
-      </form>
-      <p>This is an educational project with low security. Please do not enter any confidential information.</p>
-    </div>
-  );
+				<div className="d-grid">
+					<button type="submit" className="btn btn-primary">
+						Sign Up
+					</button>
+				</div>
+				<p className="forgot-password text-right">
+					Already registered? <Link to="../sign-in">Sign In</Link>
+				</p>
+			</form>
+			<p>
+				This is an educational project with low security. Please do not enter
+				any confidential information.
+			</p>
+		</div>
+	);
 }

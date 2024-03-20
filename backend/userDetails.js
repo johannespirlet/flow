@@ -7,8 +7,8 @@ const UserDetailsSchema = new mongoose.Schema(
     email: { type: String, unique: true }, // unique mailadressen property
     password: String,
     userType: String,
-    color: { type: String, unique: true },
-    phone: { type: String, unique: true },
+    color: String,
+    phone: String,
     note: String
   },
   {

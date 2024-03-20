@@ -15,5 +15,5 @@
 
 .contentContainer {
     padding: 2rem;
+    width: calc(100svw - 14rem);
 }
-

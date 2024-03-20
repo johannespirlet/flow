@@ -17,11 +17,6 @@
   .formContainer input[type="radio"], .formContainer input[type="checkbox"] {
     margin-inline: 0.5rem;
   }
-  
-  .authContainer {
-    width: 100%;
-    text-align: center;
-  }
 
   .formRow {
     display: flex;
@@ -29,7 +24,7 @@
   }
 
   .formRow svg {
-    margin: 0 0 3px 5px;
+    margin: 0 7px 3px 0;
   }
 
   .formRow div label:first-child {
@@ -37,5 +32,5 @@
   }
 
   .formRow:last-child > * {
-    padding-bottom: 2px;
+    padding-bottom: 3px;
   }

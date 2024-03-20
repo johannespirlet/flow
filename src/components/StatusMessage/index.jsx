@@ -20,4 +20,4 @@ const [isVisible, setIsVisible] = useState(false);
       {message.messageText}
     </div>
   );
-};
+}

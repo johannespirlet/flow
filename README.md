@@ -1,4 +1,4 @@
-# Flow 
+# Flow
 
 Since GH Pages allows only static content, feel free to download flow to see all features.
 
@@ -11,4 +11,3 @@ and then navigate to './backend' and start express server via node with
 - node server.js
 
 Enjoy!
-

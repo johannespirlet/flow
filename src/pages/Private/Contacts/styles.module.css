@@ -18,13 +18,23 @@
     margin: 0 0 3px 5px;
 }
 
+.contactContainer {
+    overflow-x: scroll;
+}
+
 .contactContainer ul {
     margin: 0;
     padding: 0;
+    min-width: fit-content;
 }
 
 .listItem {
     list-style: none;
+    overflow: auto;
+}
+
+.listItem a > * {
+    flex-shrink: 0;
 }
 
 .listItem > p {
@@ -66,7 +76,7 @@
 }
 
 .info p:nth-child(2) {
-    color: blue;
+    color: var(--bs-blue);
 }
 
 .role {
