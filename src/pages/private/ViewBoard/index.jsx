@@ -1,21 +1,57 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import axios from 'redaxios';
 import styles from './styles.module.css';
 import tasks from '../../../data/tasks';
 import BoardSection from '../../../components/BoardSection';
 import Icon from '../../../assets/icons/Icon';
 import { ICONS } from '../../../assets/icons/icons';
+import useDebouncedValue from '../../../hooks/useDebouncedValue';
 
 export default function ViewBoard() {
-	const [searchField, setSearchField] = useState('');
 
+	const [searchInput, setSearchInput] = useState('');
+/* 	const debouncedSearchInput = useDebouncedValue(searchInput, 600);
+
+	const [taskData, setTaskData] = useState(''); */
 	const filteredTasks = tasks.filter((task) => {
 		return (
-			task.title.toLowerCase().includes(searchField.toLowerCase()) ||
-			task.description.toLowerCase().includes(searchField.toLowerCase())
+			task.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+			task.description.toLowerCase().includes(searchInput.toLowerCase())
 		);
 	});
+
+
+	/* useEffect(() => {
+		let ignore = false;
+		if(debouncedSearchInput.length < 2) {
+			setSearchInput([]);
+			return;
+		}
+
+		async function fetchTasks() {
+			try {
+				const { taskData } = await axios('http://localhost:5000', {
+					params: {
+						searchInput: debouncedSearchInput,
+					},
+				});
+
+				if(ignore) {
+					return;
+				}
+
+				setTaskData(taskData);
+			} catch(error) {
+				setTaskData([]);
+				console.log(error);
+			}
+		}
+
+		fetchTasks();
+
+		return () => (ignore = true);
+	}, [debouncedSearchInput]) */
 
 	return (
 		<>
@@ -30,7 +66,7 @@ export default function ViewBoard() {
 						id='searchField'
 						name='searchField'
 						onChange={(e) => {
-							setSearchField(e.target.value);
+							setSearchInput(e.target.value);
 						}}
 						autoComplete='off'
 					/>
