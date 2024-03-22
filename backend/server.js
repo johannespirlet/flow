@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 //import nodemailer from "nodemailer"; //vorerst auskommentiert
 
-import './userDetails.js';
+import './models/user.js';
 
 const app = express();
 app.use(express.json()); //automatisches konvertieren

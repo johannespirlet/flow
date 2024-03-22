@@ -20,6 +20,9 @@ import StatusMessage from './components/StatusMessage';
 import UserDetails from './utils/UserDetails';
 import AddContact from './pages/private/AddContact';
 import ViewContact from './pages/private/ViewContact';
+import Public from './layouts/Public';
+import Auth from './layouts/Auth';
+import ViewTask from './pages/private/ViewTask';
 
 export default function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(
@@ -74,6 +77,7 @@ export default function App() {
 						element={<UserDetails handleLogout={handleTimeout} />}
 					>
 						<Route path="summary" element={<Summary />} />
+						<Route path="viewTask/:id" element={<ViewTask />} />
 						<Route path="viewBoard" element={<ViewBoard />} />
 						<Route path="addTask" element={<AddTaskPanel />} />
 						<Route path="contacts" element={<Contacts />} />
@@ -89,9 +93,11 @@ export default function App() {
 						<Route path="legalNotice" element={<LegalNotice />} />
 					</Route>
 				</Route>
-				<Route path="flow/home" element={<Home />} />
-				<Route path="flow/legalNotice" element={<LegalNotice />} />
-				<Route path="flow/auth/">
+				<Route path="flow/public/" element={<Public />}>
+					<Route path="home" element={<Home />} />
+					<Route path="legalNotice" element={<LegalNotice />} />
+				</Route>
+				<Route path="flow/auth/" element={<Auth />}>
 					<Route
 						path="sign-in"
 						element={
@@ -104,7 +110,7 @@ export default function App() {
 					/>
 					<Route path="reset" element={<Reset handleMessage={setMessage} />} />
 				</Route>
-				<Route path="/*" element={<NotFound />} />
+				<Route path="flow/*" element={<NotFound />} />
 			</Routes>
 			<StatusMessage message={message} />
 		</>

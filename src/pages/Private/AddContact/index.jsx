@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
-import Icon from '../../../../public/icons/Icon';
-import { ICONS } from '../../../../public/icons/icons';
+import Icon from '../../../assets/icons/Icon';
+import { ICONS } from '../../../assets/icons/icons';
 
 export default function AddContact({ handleMessage }) {
 	const navigate = useNavigate();

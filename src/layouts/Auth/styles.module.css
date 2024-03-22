@@ -1,6 +1,6 @@
 .formContainer {
 	text-align: center;
-	width: 25rem;
+	width: 30rem;
 	margin: 2rem auto;
 	padding: 1rem 2rem;
 	background-color: rgb(247, 247, 247);
@@ -23,7 +23,6 @@
 	text-align: center;
 }
 
-.authContainer > p {
-	color: red;
-	margin-block: 2rem;
+.formContainer > p:last-child {
+	color: var(--bs-danger);
 }

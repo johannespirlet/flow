@@ -1,9 +1,9 @@
 import { useOutletContext, useParams, Link } from 'react-router-dom';
-import { ICONS } from '../../../../public/icons/icons';
-import Icon from '../../../../public/icons/Icon';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 import DialogMessage from '../../../components/DialogMessage';
+import { ICONS } from '../../../assets/icons/icons';
+import Icon from '../../../assets/icons/Icon';
 
 export default function ViewContact({ handleMessage }) {
 	const { id } = useParams();

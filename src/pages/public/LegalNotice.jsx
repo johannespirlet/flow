@@ -1,10 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import layout from './layout.module.css';
-
 export default function LegalNotice() {
 	return (
-		<article className={layout.publicWrapper}>
+		<article>
 			<h1>Impressum</h1>
 			<br />
 			<p>Angaben gemäß § 5 TMG</p>

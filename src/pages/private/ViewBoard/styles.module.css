@@ -1,0 +1,33 @@
+.headerContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-block: 1rem;
+}
+
+.headerContainer a {
+	padding-bottom: 2px;
+	margin-inline: 5px;
+}
+
+.headerContainer h1 {
+	display: inline;
+}
+
+.headerContainer svg {
+	margin: 0 7px 3px 0;
+}
+
+.boardContainer {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 5fr));
+}
+
+.searchInput {
+    display: inline;
+    padding: .3rem .5rem;
+    width: 12rem;
+}
+
+

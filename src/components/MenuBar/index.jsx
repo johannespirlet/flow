@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import CustomLink from "../CustomLink";
-import { ICONS } from "../../../public/icons/icons.js";
-import Icon from "../../../public/icons/Icon.jsx";
+import { ICONS } from "../../assets/icons/icons.js";
+import Icon from "../../assets/icons/Icon.jsx";
 
 export default function MenuBar() {
   return (

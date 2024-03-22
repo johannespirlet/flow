@@ -1,0 +1,37 @@
+.taskContainer {
+	padding: .3rem;
+}
+
+.department {
+    border-radius: 10px;
+    padding: .3rem .5rem;
+}
+
+.taskContainer h3 {
+    margin: .6rem .3rem .2rem .3rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+}
+
+.taskContainer p {
+    margin-inline: .3rem;
+    color: var(--bs-gray-700);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.bottomBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-start: .5rem;
+}
+
+.avatar {
+    width: 1.8rem;
+    height: 1.8rem;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: yellow;
+}

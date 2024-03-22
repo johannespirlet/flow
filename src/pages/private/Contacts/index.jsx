@@ -2,8 +2,8 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
-import Icon from '../../../../public/icons/Icon';
-import { ICONS } from '../../../../public/icons/icons';
+import Icon from '../../../assets/icons/Icon';
+import { ICONS } from '../../../assets/icons/icons';
 
 export default function Contacts() {
 	//data state um daten zu fetchen und nutzbar zu machen
@@ -35,6 +35,7 @@ export default function Contacts() {
 
 	return (
 		<>
+			<title>Contacts</title>
 			<header className={styles.headerContainer}>
 				<h1>Contacts</h1>
 				{userData.userType == 'Admin' && (
@@ -50,8 +51,7 @@ export default function Contacts() {
 						{
 							return (
 								<li key={entries._id} className={styles.listItem}>
-									{(index == 0 || //schreibe Überschrift falls erster Eintrag oder
-										//zu jedem Eintrag, bei dem sich der Anfangsbuchstabe unterscheidet
+									{(index == 0 ||
 										(entries._id != userData._id &&
 											entries.fname.toLowerCase().charAt(0) !=
 												array[
@@ -60,7 +60,9 @@ export default function Contacts() {
 													.toLowerCase()
 													.charAt(0))) && (
 										<>
-											<p className={styles.contactOverhead}>{entries.fname.toUpperCase().charAt(0)}</p>
+											<p className={styles.contactOverhead}>
+												{entries.fname.toUpperCase().charAt(0)}
+											</p>
 											<hr />
 										</>
 									)}
@@ -80,7 +82,7 @@ export default function Contacts() {
 												<p>{entries.email}</p>
 											</div>
 											<p className={styles.role}>{entries.userType}</p>
-											{<p className={styles.phone}>{(entries.phone)}</p> || ' '}
+											{<p className={styles.phone}>{entries.phone}</p> || ' '}
 											{entries.note && (
 												<p className={styles.note}>{`"${entries.note}"`}</p>
 											)}
