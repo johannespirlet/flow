@@ -1,7 +1,10 @@
 export default function Home() {
 	return (
-		<section>
-			<h1>Home</h1>
-		</section>
+		<>
+			<title>Home of Flow</title>
+			<section>
+				<h1>Home</h1>
+			</section>
+		</>
 	);
 }

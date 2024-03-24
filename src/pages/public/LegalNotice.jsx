@@ -3,6 +3,7 @@
 export default function LegalNotice() {
 	return (
 		<article>
+			<title>Keep It Legal - Flow</title>
 			<h1>Impressum</h1>
 			<br />
 			<p>Angaben gemäß § 5 TMG</p>

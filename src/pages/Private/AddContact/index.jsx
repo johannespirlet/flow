@@ -66,6 +66,7 @@ export default function AddContact({ handleMessage }) {
 
 	return (
 		<div>
+			<title>Add a Contact - Flow </title>
 			<h1 className={styles.title}>Add New Contact</h1>
 			<form onSubmit={handleSubmit} className={styles.formContainer}>
 				<div className={styles.formRow}>

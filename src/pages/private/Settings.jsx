@@ -1,3 +1,8 @@
 export default function Settings() {
-    return <h1>Settings Page</h1>
+	return (
+		<>
+			<title>Settings - Flow</title>
+			<h1>Settings Page</h1>
+		</>
+	);
 }

@@ -66,6 +66,7 @@ export default function SignUp({ handleMessage }) {
 
 	return (
 		<>
+			<title>Sign Up to Flow</title>
 			<h3>Sign Up</h3>
 			<div>
 				Register As

@@ -48,6 +48,7 @@ export default function Login({ handleLogin, handleMessage }) {
 
 	return (
 		<>
+			<title>Log Into Flow</title>
 			<h3>Sign In</h3>
 
 			<div className="mb-3">
