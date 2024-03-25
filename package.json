@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "npm install --force && vite build",
+		"build": "vite build",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
 		"preview": "vite preview"
 	},
@@ -13,8 +13,8 @@
 		"bootstrap": "^5.3.3",
 		"localforage": "^1.10.0",
 		"match-sorter": "^6.3.4",
-		"react": "^18.3.0-canary-a4939017f-20240320",
-		"react-dom": "^18.3.0-canary-a4939017f-20240320",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.22.3",
 		"redaxios": "^0.5.1",
 		"sort-by": "^0.0.2"
