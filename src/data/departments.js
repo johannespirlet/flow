@@ -1,7 +1,7 @@
 export default [
-	{ name: 'Management', color: 'blue' },
-	{ name: 'Design', color: 'yellow' },
-    { name: 'Media', color: 'orange' },
-	{ name: 'Backoffice', color: 'lightblue' },
-	{ name: 'Marketing', color: 'lime' },
+	{ id: 1, name: 'Management', color: 'blue' },
+	{ id: 2, name: 'Design', color: 'yellow' },
+    { id: 3, name: 'Media', color: 'orange' },
+	{ id: 4, name: 'Backoffice', color: 'lightblue' },
+	{ id: 5, name: 'Marketing', color: 'lime' },
 ];

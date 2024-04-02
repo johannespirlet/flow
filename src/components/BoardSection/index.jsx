@@ -6,14 +6,13 @@ export default function BoardSection({ headingTitle, taskItems }) {
 	return (
 		<article className={styles.boardSection}>
 			<h3>{headingTitle}</h3>
-
 			<ul className={styles.taskList}>
 				{taskItems.map(
 					(task) =>
 						task.section === headingTitle && (
 							<Link
-								key={task.id}
-								to={`../viewTask/${task.id}`}
+								key={task._id}
+								to={`../viewTask/${task.title}`}
 								className={styles.taskLink}
 							>
 								<li className={styles.taskContainer}>

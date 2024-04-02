@@ -4,7 +4,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 }
 
 .headerContainer .contactBtn {
@@ -71,7 +70,7 @@
 }
 
 .contactColumn {
-  width: 10rem;
+  width: 12rem;
   display: inline-block;
   
   p {

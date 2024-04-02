@@ -1,4 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
+import styles from './styles.module.css';
 
 export default function Summary() {
 	const userData = useOutletContext();
@@ -7,7 +8,7 @@ export default function Summary() {
 		<>
 			<title>Let`s Sum Up - Flow</title>
 			<h1>
-				Welcome {userData.fname} {userData.lname}
+				Welcome <span className={styles.greeting}>{userData.fname} {userData.lname}</span>
 			</h1>
 		</>
 	);

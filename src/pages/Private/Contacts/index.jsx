@@ -1,5 +1,6 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ColorRing } from 'react-loader-spinner';
 
 import styles from './styles.module.css';
 import Icon from '../../../assets/icons/Icon';
@@ -7,7 +8,7 @@ import { ICONS } from '../../../assets/icons/icons';
 
 export default function Contacts() {
 	//data state um daten zu fetchen und nutzbar zu machen
-	const [data, setData] = useState([]);
+	const [data, setData] = useState();
 	const userData = useOutletContext();
 
 	function sortData(data) {
@@ -30,8 +31,28 @@ export default function Contacts() {
 				});
 		};
 		getAllUser();
+
 		return () => {};
 	}, []);
+
+	if (!data) {
+		return (
+			<ColorRing
+				visible={true}
+				height="80"
+				width="80"
+				ariaLabel="color-ring-loading"
+				wrapperStyle={{
+					position: 'relative',
+					left: '50%',
+					top: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
+				wrapperClass={`color-ring-wrapper`}
+				colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+			/>
+		);
+	}
 
 	return (
 		<>

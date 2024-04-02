@@ -1,28 +1,45 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-//import axios from 'redaxios';
+import { useState, useEffect } from 'react';
+import axios from 'redaxios';
 import styles from './styles.module.css';
-import tasks from '../../../data/tasks';
 import BoardSection from '../../../components/BoardSection';
 import Icon from '../../../assets/icons/Icon';
 import { ICONS } from '../../../assets/icons/icons';
-//import useDebouncedValue from '../../../hooks/useDebouncedValue';
+import useDebouncedValue from '../../../hooks/useDebouncedValue';
+import { ColorRing } from 'react-loader-spinner';
 
 export default function ViewBoard() {
 	const [searchInput, setSearchInput] = useState('');
-	/* 	const debouncedSearchInput = useDebouncedValue(searchInput, 600);
+	const debouncedSearchInput = useDebouncedValue(searchInput, 600);
 
-	const [taskData, setTaskData] = useState(''); */
-	const filteredTasks = tasks.filter((task) => {
+	const [taskData, setTaskData] = useState('');
+/* 	const filteredTasks = taskData?.filter((task) => {
 		return (
-			task.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-			task.description.toLowerCase().includes(searchInput.toLowerCase())
+			task.title.toLowerCase().includes(debouncedSearchInput.toLowerCase()) ||
+			task.description
+				.toLowerCase()
+				.includes(debouncedSearchInput.toLowerCase())
 		);
-	});
+	}); */
 
-	/* useEffect(() => {
+	useEffect(() => {
+		const getAllTasks = () => {
+			fetch('http://localhost:5000/getAllTasks', {
+				method: 'GET',
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					setTaskData(data.data);
+				});
+		};
+		getAllTasks();
+
+		return () => {};
+	}, []);
+
+	useEffect(() => {
 		let ignore = false;
-		if(debouncedSearchInput.length < 2) {
+		if (debouncedSearchInput.length < 2) {
 			setSearchInput([]);
 			return;
 		}
@@ -35,12 +52,12 @@ export default function ViewBoard() {
 					},
 				});
 
-				if(ignore) {
+				if (ignore) {
 					return;
 				}
 
 				setTaskData(taskData);
-			} catch(error) {
+			} catch (error) {
 				setTaskData([]);
 				console.log(error);
 			}
@@ -49,7 +66,26 @@ export default function ViewBoard() {
 		fetchTasks();
 
 		return () => (ignore = true);
-	}, [debouncedSearchInput]) */
+	}, [debouncedSearchInput]);
+
+	if (!taskData) {
+		return (
+			<ColorRing
+				visible
+				height="80"
+				width="80"
+				ariaLabel="loading content"
+				wrapperStyle={{
+					position: 'relative',
+					left: '50%',
+					top: '50%',
+					transform: 'translate(-50%, -50%)',
+				}}
+				wrapperClass={`color-ring-wrapper`}
+				colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+			/>
+		);
+	}
 
 	return (
 		<>
@@ -69,20 +105,16 @@ export default function ViewBoard() {
 						}}
 						autoComplete="off"
 					/>
-					<Link to="AddTask" className="btn btn-primary">
+					<Link to="../addTask" className="btn btn-primary">
 						<Icon icon={ICONS.addTask} size="1.4rem" color="white" />
 						Add Task
 					</Link>
 				</nav>
 			</header>
 			<section className={styles.boardContainer}>
-				<BoardSection taskItems={filteredTasks} headingTitle={'To Do'} />
-				<BoardSection taskItems={filteredTasks} headingTitle={'In Progress'} />
-				<BoardSection
-					taskItems={filteredTasks}
-					headingTitle={'Awaiting Feedback'}
-				/>
-				<BoardSection taskItems={filteredTasks} headingTitle={'Done'} />
+			{['To Do', 'In Progress', 'Awaiting Feedback', 'Done'].map((title) => (
+					<BoardSection key={title} taskItems={taskData} headingTitle={title} />
+				))}
 			</section>
 		</>
 	);

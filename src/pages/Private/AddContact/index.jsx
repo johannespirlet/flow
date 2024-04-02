@@ -24,48 +24,39 @@ export default function AddContact({ handleMessage }) {
 		});
 	};
 
-	const handleSubmit = (e) => {
-		//falls admin angegeben und secretKey nicht matcht, alert
-		e.preventDefault();
-		//poste zum backend das datenobjekt im json format
-		fetch('http://localhost:5000/addUser', {
+const handleSubmit = async (event) => {
+	event.preventDefault();
+
+	try {
+		const response = await fetch('http://localhost:5000/addUser', {
 			method: 'POST',
-			crossDomain: true,
 			headers: {
 				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				'Access-Control-Allow-Origin': '*',
 			},
-			body: JSON.stringify({
-				fname: formData.fname,
-				lname: formData.lname,
-				email: formData.email,
-				password: formData.password,
-				userType: formData.userType,
-				phone: formData.phone,
-				note: formData.note,
-			}),
-		}) //die antwort wird als json akzeptiert
-			.then((res) => res.json())
-			.then((data) => {
-				//falls im backend alles ok ist, berichte darueber
-				if (data.status == 'ok') {
-					handleMessage({
-						messageText: 'New Contact added!',
-						messageType: 'positive',
-					});
-					navigate('../Contacts');
-				} else {
-					handleMessage({
-						messageText: 'User already exists. Please change your data',
-						messageType: 'negative',
-					});
-				}
+			body: JSON.stringify(formData),
+		});
+
+		const { status } = await response.json();
+
+		if (status === 'ok') {
+			handleMessage({
+				messageText: 'New contact added!',
+				messageType: 'positive',
 			});
-	};
+			navigate('../Contacts');
+		} else {
+			handleMessage({
+				messageText: 'User already exists. Please change your data',
+				messageType: 'negative',
+			});
+		}
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 	return (
-		<div>
+		<>
 			<title>Add a Contact - Flow </title>
 			<h1 className={styles.title}>Add New Contact</h1>
 			<form onSubmit={handleSubmit} className={styles.formContainer}>
@@ -191,6 +182,6 @@ export default function AddContact({ handleMessage }) {
 					</button>
 				</div>
 			</form>
-		</div>
+		</>
 	);
 }

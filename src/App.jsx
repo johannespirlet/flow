@@ -8,7 +8,7 @@ import Login from './features/auth/Login';
 import SignUp from './features/auth/Signup';
 import Reset from './features/auth/Reset';
 import NotFound from './pages/public/NotFound';
-import AddTaskPanel from './pages/private/AddTask';
+import AddTask from './pages/private/AddTask';
 import AuthRoutes from './utils/AuthRoutes';
 import Home from './pages/public/Home';
 import Settings from './pages/private/Settings';
@@ -21,7 +21,6 @@ import UserDetails from './utils/UserDetails';
 import AddContact from './pages/private/AddContact';
 import ViewContact from './pages/private/ViewContact';
 import Public from './layouts/Public';
-import Auth from './layouts/Auth';
 import ViewTask from './pages/private/ViewTask';
 
 export default function App() {
@@ -29,6 +28,7 @@ export default function App() {
 		localStorage.getItem('loggedIn')
 	);
 	let [message, setMessage] = useState('');
+
 	const navigate = useNavigate();
 
 	const handleLogin = () => {
@@ -79,7 +79,7 @@ export default function App() {
 						<Route path="summary" element={<Summary />} />
 						<Route path="viewTask/:id" element={<ViewTask />} />
 						<Route path="viewBoard" element={<ViewBoard />} />
-						<Route path="addTask" element={<AddTaskPanel />} />
+						<Route path="addTask" element={<AddTask handleMessage={setMessage} />} />
 						<Route path="contacts" element={<Contacts />} />
 						<Route
 							path="contacts/addContact"
@@ -97,7 +97,7 @@ export default function App() {
 					<Route path="home" element={<Home />} />
 					<Route path="legalNotice" element={<LegalNotice />} />
 				</Route>
-				<Route path="flow/auth/" element={<Auth />}>
+				<Route path="flow/auth/">
 					<Route
 						path="sign-in"
 						element={

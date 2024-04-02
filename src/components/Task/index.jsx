@@ -4,48 +4,70 @@ import Icon from '../../assets/icons/Icon';
 import { ICONS } from '../../assets/icons/icons';
 
 export default function Task({ task }) {
+	const { department, title, description, assignedTo, priority } = task;
+	const departmentColor = departments.find((d) => d.name === department).color;
+	const priorityIcon = getPriorityIcon(priority);
+	const priorityColor = getPriorityColor(priority);
+
 	return (
-		<div className={styles.taskContainer}>
+		<div className={styles.taskContainer} draggable>
 			<span
 				className={styles.department}
-				style={{
-					backgroundColor: `${
-						departments.find((obj) => obj.name == task.department).color
-					}`,
-				}}
+				style={{ backgroundColor: departmentColor }}
 			>
-				{task.department}
+				{department}
 			</span>
-			<h3>{task.title}</h3>
-			<p>{task.description}</p>
+			<h3>{title}</h3>
+			{description && <p>{description}</p>}
 			<div className={styles.bottomBar}>
-				<div>
-					{task.assignedTo.map((person, index) => (
+				<div className={styles.assignees}>
+					<div
+						className={styles.avatar}
+						style={{ backgroundColor: assignedTo[0].color }}
+					>
+						{assignedTo[0].initials}
+					</div>
+					{assignedTo[1] && (
 						<div
-							key={person.id}
 							className={styles.avatar}
-							style={{ marginLeft: `${index * -8}px` }}
-						></div>
-					))}
+							style={{ backgroundColor: assignedTo[1].color }}
+						>
+							{assignedTo[1].initials}
+						</div>
+					)}
+					{assignedTo.length > 2 && (
+						<div
+							className={styles.avatar}
+							style={{ backgroundColor: "darkgrey", color: "white" }}
+						>
+							{`+${assignedTo.length - 2}`}
+						</div>
+					)}
 				</div>
-				<Icon
-					icon={
-						task.priority === 'low'
-							? ICONS.low
-							: task.priority === 'medium'
-							? ICONS.medium
-							: ICONS.high
-					}
-					size="2.4rem"
-					color={
-						task.priority === 'low'
-							? 'green'
-							: task.priority === 'medium'
-							? 'yellow'
-							: 'red'
-					}
-				/>
+				<Icon icon={priorityIcon} size="2.4rem" color={priorityColor} />
 			</div>
 		</div>
 	);
 }
+
+const getPriorityIcon = (priority) => {
+	switch (priority) {
+		case 'low':
+			return ICONS.low;
+		case 'medium':
+			return ICONS.medium;
+		default:
+			return ICONS.high;
+	}
+};
+
+const getPriorityColor = (priority) => {
+	switch (priority) {
+		case 'low':
+			return 'green';
+		case 'medium':
+			return 'yellow';
+		default:
+			return 'red';
+	}
+};

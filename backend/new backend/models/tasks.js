@@ -6,16 +6,10 @@ const TaskDetailsSchema = new mongoose.Schema(
 		description: String,
 		department: String,
 		section: String,
-		assignedTo: [
-			{
-				id: { type: String },
-				initials: { type: String },
-				color: { type: String },
-			},
-		],
-		dueDate: String,
+		assignedTo: [{ type: String, unique: true }],
+		dueDate: { type: Date, optional: true },
 		priority: String,
-		subTasks: [{ taskName: { type: String }, checked: { type: Boolean } }],
+		subTasks: [{ type: String, optional: true }],
 	},
 	{
 		collection: 'TaskInfo',

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styles from './auth.module.css';
 
 export default class Reset extends Component {
 	constructor(props) {
@@ -35,37 +36,39 @@ export default class Reset extends Component {
 
 	render() {
 		return (
-			<>
-				<h3>Forgot Password</h3>
-				<div className="mb-3">
-					<label htmlFor="email">Email address</label>
-					<input
-						type="email"
-						id="email"
-						name="email"
-						className="form-control"
-						placeholder="Enter E-Mail"
-						onChange={(e) => this.setState({ email: e.target.value })}
-						autoComplete="email"
-					/>
-				</div>
-				<div className="d-grid">
-					<button
-						type="submit"
-						onClick={this.handleSubmit}
-						className="btn btn-primary"
-					>
-						Submit
-					</button>
-				</div>
-				<p className="forgot-password text-right">
-					<Link to="../sign-up">Sign Up</Link>
-				</p>
-				<p>
-					This is an educational project with low security. Please do not enter
-					any confidential information.
-				</p>
-			</>
+			<div className={styles.authContainer}>
+				<form className={styles.formContainer} onSubmit={this.handleSubmit}>
+					{' '}
+					<h3>Forgot Password</h3>
+					<div className="mb-3">
+						<label htmlFor="email">Email address</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							className="form-control"
+							placeholder="Enter E-Mail"
+							onChange={(e) => this.setState({ email: e.target.value })}
+							autoComplete="email"
+						/>
+					</div>
+					<div className="d-grid">
+						<button
+							type="submit"
+							className="btn btn-primary"
+						>
+							Submit
+						</button>
+					</div>
+					<p className="forgot-password text-right">
+						<Link to="../sign-up">Sign Up</Link>
+					</p>
+					<p>
+						This is an educational project with low security. Please do not
+						enter any confidential information.
+					</p>
+				</form>
+			</div>
 		);
 	}
 }
