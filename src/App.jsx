@@ -33,7 +33,7 @@ export default function App() {
 	const handleLogin = () => {
 		window.localStorage.setItem('loggedIn', true);
 		setIsLoggedIn(true);
-		navigate('flow/board/summary', { replace: true });
+		navigate('board/summary', { replace: true });
 		setMessage(
 			(message = {
 				messageText: 'Login Successful!',
@@ -44,7 +44,7 @@ export default function App() {
 
 	const handleLogout = () => {
 		localStorage.clear();
-		navigate('flow/home');
+		navigate('home');
 		setIsLoggedIn(false);
 		setMessage(
 			(message = {
@@ -56,7 +56,7 @@ export default function App() {
 
 	const handleTimeout = () => {
 		localStorage.clear();
-		navigate('flow/auth/sign-in');
+		navigate('auth/sign-in');
 		setIsLoggedIn(false);
 		setMessage(
 			(message = {
@@ -98,11 +98,11 @@ export default function App() {
 						<Route path="legalNotice" element={<LegalNotice />} />
 					</Route>
 				</Route>
-				<Route path="flow/public/" element={<Public />}>
+				<Route path="public/" element={<Public />}>
 					<Route path="home" element={<Home />} />
 					<Route path="legalNotice" element={<LegalNotice />} />
 				</Route>
-				<Route path="flow/auth/">
+				<Route path="auth/">
 					<Route
 						path="sign-in"
 						element={
@@ -115,7 +115,7 @@ export default function App() {
 					/>
 					<Route path="reset" element={<Reset handleMessage={setMessage} />} />
 				</Route>
-				<Route path="flow/*" element={<NotFound />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 			<StatusMessage message={message} />
 		</>
