@@ -10,6 +10,8 @@ const TaskDetailsSchema = new mongoose.Schema(
 			{
 				id: { type: String },
 				initials: { type: String },
+				fname: { type: String },
+				lname: { type: String },
 				color: { type: String },
 			},
 		],

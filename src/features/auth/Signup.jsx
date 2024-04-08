@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './auth.module.css';
 
 export default function SignUp({ handleMessage }) {
-	const [secretKey, setSecretKey] = useState('');
 	const [formData, setFormData] = useState({
 		fname: '',
 		lname: '',
 		email: '',
 		password: '',
 		userType: 'User',
+		secretKey: '',
 	});
 	const navigate = useNavigate();
 
@@ -22,47 +22,32 @@ export default function SignUp({ handleMessage }) {
 	};
 
 	const handleSubmit = (e) => {
-		if (formData.userType == 'Admin' && secretKey != '2AdMiN2') {
-			e.preventDefault();
-			handleMessage({
-				messageText: 'Ungültiger Adminkey',
-				messageType: 'negative',
+		e.preventDefault();
+		fetch('http://localhost:5000/register', {
+			method: 'POST',
+			crossDomain: true,
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: JSON.stringify(formData),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.status == 'ok') {
+					handleMessage({
+						messageText: 'Registrierung erfolgreich! You may sign in now.',
+						messageType: 'positive',
+					});
+					navigate('../sign-in');
+				} else {
+					handleMessage({
+						messageText: data.error,
+						messageType: 'negative',
+					});
+				}
 			});
-		} else {
-			e.preventDefault();
-			fetch('http://localhost:5000/register', {
-				method: 'POST',
-				crossDomain: true,
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					'Access-Control-Allow-Origin': '*',
-				},
-				body: JSON.stringify({
-					fname: formData.fname,
-					email: formData.email,
-					lname: formData.lname,
-					password: formData.password,
-					userType: formData.userType,
-				}),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.status == 'ok') {
-						handleMessage({
-							messageText: 'Registrierung erfolgreich! You may sign in now.',
-							messageType: 'positive',
-						});
-						navigate('../sign-in');
-					} else {
-						handleMessage({
-							messageText:
-								'User gibt es bereits. Bitte andere Eingaben verwenden!',
-							messageType: 'negative',
-						});
-					}
-				});
-		}
 	};
 
 	return (
@@ -99,7 +84,7 @@ export default function SignUp({ handleMessage }) {
 							id="secretKey"
 							className="form-control"
 							placeholder="Secret Key"
-							onChange={(e) => setSecretKey(e.target.value)}
+							onChange={handleChange}
 						/>
 					</div>
 				) : null}

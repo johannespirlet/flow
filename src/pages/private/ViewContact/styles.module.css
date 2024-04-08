@@ -1,5 +1,4 @@
 .headerContainer {
-  width: 35rem;
   margin-block: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -28,6 +27,7 @@
 
 .btnBox {
   height: 2.4rem;
+  flex-shrink: 0;
 }
 
 .contactBtn {

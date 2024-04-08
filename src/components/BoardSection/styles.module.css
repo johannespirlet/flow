@@ -1,25 +1,10 @@
 .boardSection {
 	padding: 1rem;
-    background-color: var(--bs-gray-300);
-    border-radius: 10px;
-}
-
-.taskLink {
-    text-decoration: none;
-    color: inherit;
+	background-color: var(--bs-gray-300);
+	border-radius: 10px;
 }
 
 .taskList {
-    margin: 0;
-    padding: 0;
-}
-
-.taskContainer {
-    list-style: none;
-    padding: .5rem;
-    margin-block: .5rem;
-    border-radius: 1rem;
-    -webkit-box-shadow: 3px 3px 11px -7px var(--bs-gray-600);
-	box-shadow: 3px 3px 11px -7px var(--bs-gray-600);
-    background-color: var(--bs-white);
+	margin: 0;
+	padding: 0;
 }

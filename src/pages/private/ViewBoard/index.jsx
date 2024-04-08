@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import axios from 'redaxios';
 import styles from './styles.module.css';
 import BoardSection from '../../../components/BoardSection';
 import Icon from '../../../assets/icons/Icon';
@@ -11,62 +11,53 @@ import { ColorRing } from 'react-loader-spinner';
 export default function ViewBoard() {
 	const [searchInput, setSearchInput] = useState('');
 	const debouncedSearchInput = useDebouncedValue(searchInput, 600);
-
-	const [taskData, setTaskData] = useState('');
-/* 	const filteredTasks = taskData?.filter((task) => {
-		return (
-			task.title.toLowerCase().includes(debouncedSearchInput.toLowerCase()) ||
-			task.description
-				.toLowerCase()
-				.includes(debouncedSearchInput.toLowerCase())
-		);
-	}); */
+	const [taskData, setTaskData] = useState(null);
+	const [filteredTasks, setFilteredTasks] = useState([]);
 
 	useEffect(() => {
-		const getAllTasks = () => {
-			fetch('http://localhost:5000/getAllTasks', {
-				method: 'GET',
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					setTaskData(data.data);
-				});
-		};
-		getAllTasks();
-
-		return () => {};
+		const url = new URL(window.location.href);
+		const searchParam = url.searchParams.get('searchInput');
+		if (searchParam) {
+			setSearchInput(searchParam);
+			filterTasks(searchParam);
+		} else {
+			fetchTasks();
+		}
 	}, []);
 
 	useEffect(() => {
-		let ignore = false;
-		if (debouncedSearchInput.length < 2) {
-			setSearchInput([]);
-			return;
+		const url = new URL(window.location.href);
+
+		if (debouncedSearchInput.length >= 3) {
+			url.searchParams.set('searchInput', debouncedSearchInput);
+			history.replaceState({}, '', url);
+			filterTasks(debouncedSearchInput);
+		} else {
+			url.searchParams.delete('searchInput');
+			history.replaceState({}, '', url);
+			setFilteredTasks([]);
 		}
-
-		async function fetchTasks() {
-			try {
-				const { taskData } = await axios('http://localhost:5000', {
-					params: {
-						searchInput: debouncedSearchInput,
-					},
-				});
-
-				if (ignore) {
-					return;
-				}
-
-				setTaskData(taskData);
-			} catch (error) {
-				setTaskData([]);
-				console.log(error);
-			}
-		}
-
-		fetchTasks();
-
-		return () => (ignore = true);
 	}, [debouncedSearchInput]);
+
+	const fetchTasks = async () => {
+		try {
+			const response = await fetch('http://localhost:5000/getAllTasks');
+			const { data } = await response.json();
+			setTaskData(data);
+		} catch (error) {
+			console.error('Error fetching tasks:', error);
+		}
+	};
+
+	const filterTasks = (searchTerm) => {
+		const searchedTasks = taskData.filter(({ title, description }) => {
+			return (
+				title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				description.toLowerCase().includes(searchTerm.toLowerCase())
+			);
+		});
+		setFilteredTasks(searchedTasks);
+	};
 
 	if (!taskData) {
 		return (
@@ -100,6 +91,7 @@ export default function ViewBoard() {
 						placeholder="Search Tasks"
 						id="searchField"
 						name="searchField"
+						value={searchInput}
 						onChange={(e) => {
 							setSearchInput(e.target.value);
 						}}
@@ -112,8 +104,12 @@ export default function ViewBoard() {
 				</nav>
 			</header>
 			<section className={styles.boardContainer}>
-			{['To Do', 'In Progress', 'Awaiting Feedback', 'Done'].map((title) => (
-					<BoardSection key={title} taskItems={taskData} headingTitle={title} />
+				{['To Do', 'In Progress', 'Awaiting Feedback', 'Done'].map((title) => (
+					<BoardSection
+						key={title}
+						taskItems={filteredTasks.length > 0 ? filteredTasks : taskData}
+						headingTitle={title}
+					/>
 				))}
 			</section>
 		</>

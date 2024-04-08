@@ -1,40 +1,65 @@
-.taskContainer {
-	padding: .3rem;
+.department {
+	border-radius: 10px;
+	padding: 6px 8px;
+	color: var(--bs-white);
 }
 
-.department {
-    border-radius: 10px;
-    padding: .3rem .5rem;
+.taskContainer {
+	list-style: none;
+	padding: 0.9rem 0.8rem;
+	margin-block: 0.7rem;
+	border-radius: 1rem;
+	-webkit-box-shadow: 3px 3px 11px -7px var(--bs-gray-600);
+	box-shadow: 3px 3px 11px -7px var(--bs-gray-600);
+	background-color: var(--bs-white);
 }
 
 .taskContainer h3 {
-    margin: .8rem .3rem .2rem .3rem;
-    font-size: 1.1rem;
-    text-transform: uppercase;
+	margin: 0.7rem 0.3rem 0 0.3rem;
+	font-size: 1.1rem;
+	text-transform: uppercase;
 }
 
 .taskContainer p {
-    margin-inline: .3rem;
-    color: var(--bs-gray-700);
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+	margin: 0.5rem 0.3rem;
+	color: var(--bs-gray-700);
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.progressBar {
+	margin: 0.5rem 0.7rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+
+	progress {
+		inline-size: 100%;
+		block-size: 10px;
+	}
 }
 
 .bottomBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-block-start: .5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-inline: 5px 2px;
 }
 
 .avatar {
-    font-size: 1rem;
-    width: 2.1rem;
-    height: 2.1rem;
-    border-radius: 50%;
-    display: inline-flex;
+	font-size: 1rem;
+	width: 2.1rem;
+	height: 2.1rem;
+	border-radius: 50%;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-    margin-left: -3px;
+	margin-left: -3px;
+}
+
+.taskLink {
+	text-decoration: none;
+	color: inherit;
 }

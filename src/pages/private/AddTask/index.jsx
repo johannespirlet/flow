@@ -70,7 +70,6 @@ export default function AddTask({ handleMessage }) {
 					...taskData,
 					[name]: taskData.assignedTo.filter(({ id }) => id !== value),
 				});
-				console.log(taskData.assignedTo);
 			} else {
 				setTaskData({
 					...taskData,
@@ -78,13 +77,14 @@ export default function AddTask({ handleMessage }) {
 						...taskData.assignedTo,
 						{
 							id: _id,
+							fname,
+							lname,
 							initials:
 								fname.toUpperCase().charAt(0) + lname.toUpperCase().charAt(0),
 							color,
 						},
 					],
 				});
-				console.log(taskData.assignedTo);
 			}
 		} else if (name === 'subTasks')
 			setTaskData({
@@ -113,6 +113,18 @@ export default function AddTask({ handleMessage }) {
 			}
 		}
 	};
+
+	const handleButtonPress = (event) => {
+		event.preventDefault();
+		if (inputValue.trim() !== '') {
+			setTaskData({
+				...taskData,
+				subTasks: [...taskData.subTasks, { taskName: inputValue, checked: false }],
+			});
+			setInputValue('');
+		}
+	}
+
 
 	const handleSubCheck = (taskName) => {
 		setTaskData({
@@ -258,7 +270,7 @@ export default function AddTask({ handleMessage }) {
 							<Icon
 								icon={ICONS.low}
 								size="1.5rem"
-								color="var(--bs-success-text-emphasis)"
+								color="var(--bs-success)"
 							/>
 						</label>
 					</div>
@@ -276,7 +288,7 @@ export default function AddTask({ handleMessage }) {
 							<Icon
 								icon={ICONS.medium}
 								size="1.5rem"
-								color="var(--bs-warning-text-emphasis)"
+								color="var(--bs-warning)"
 							/>
 						</label>
 					</div>
@@ -294,42 +306,49 @@ export default function AddTask({ handleMessage }) {
 							<Icon
 								icon={ICONS.high}
 								size="1.5rem"
-								color="var(--bs-danger-text-emphasis)"
+								color="var(--bs-danger)"
 							/>
 						</label>
 					</div>
 				</div>
 
 				<label htmlFor="subTasks">Subtasks</label>
-				<input
-					type="text"
-					className="form-control"
-					id="subTasks"
-					name="subTasks"
-					value={inputValue}
-					placeholder="Add a Subtask"
-					onChange={(e) => setInputValue(e.target.value)}
-					onKeyDown={handleKeypress}
-				/>
-				<ul className={styles.subTaskList}>
-					{taskData.subTasks.map(({ taskName, checked }, index) => {
-						return (
-							<li key={index}>
-								<label htmlFor={`${taskName}${index}`}>
-									<input
-										id={`${taskName}${index}`}
-										name={`${taskName}${index}`}
-										type="checkbox"
-										className={styles.subTaskCheckbox}
-										checked={checked}
-										onChange={() => handleSubCheck(taskName)}
-									/>
-									{taskName}
-								</label>
-							</li>
-						);
-					})}
-				</ul>
+				<div>
+					<input
+						type="text"
+						className={`form-control ${styles.subTaskInput}`}
+						id="subTasks"
+						name="subTasks"
+						value={inputValue}
+						placeholder="Add a Subtask"
+						onChange={(e) => setInputValue(e.target.value)}
+						onKeyDown={handleKeypress}
+					/>
+					<button className={`btn btn-secondary ${styles.addButton}`} onClick={handleButtonPress}>
+						<Icon icon={ICONS.add} size="2rem" color="var(--bs-white)" />
+					</button>
+				</div>
+				{taskData.subTasks.length > 0 && (
+					<ul className={styles.subTaskList}>
+						{taskData.subTasks.map(({ taskName, checked }, index) => {
+							return (
+								<li key={index}>
+									<label htmlFor={`${taskName}${index}`}>
+										<input
+											id={`${taskName}${index}`}
+											name={`${taskName}${index}`}
+											type="checkbox"
+											className={styles.subTaskCheckbox}
+											checked={checked}
+											onChange={() => handleSubCheck(taskName)}
+										/>
+										{taskName}
+									</label>
+								</li>
+							);
+						})}
+					</ul>
+				)}
 
 				<div className={styles.buttonRow}>
 					<Link to={'../Summary'} className="btn btn-secondary">

@@ -7,7 +7,6 @@ import Icon from '../../../assets/icons/Icon';
 import { ICONS } from '../../../assets/icons/icons';
 
 export default function Contacts() {
-	//data state um daten zu fetchen und nutzbar zu machen
 	const [data, setData] = useState();
 	const userData = useOutletContext();
 
@@ -19,8 +18,8 @@ export default function Contacts() {
 		});
 	}
 
+
 	useEffect(() => {
-		//fetch alle userdaten vom backend
 		const getAllUser = () => {
 			fetch('http://localhost:5000/getAllUser', {
 				method: 'GET',
@@ -32,7 +31,7 @@ export default function Contacts() {
 		};
 		getAllUser();
 
-		return () => {};
+		return () => { };
 	}, []);
 
 	if (!data) {

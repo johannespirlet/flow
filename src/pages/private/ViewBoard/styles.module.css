@@ -7,7 +7,8 @@
 
 .headerContainer a {
 	padding-bottom: 2px;
-	margin-inline: 5px;
+	margin-inline: 10px;
+	height: 34px;
 }
 
 .headerContainer h1 {
@@ -21,7 +22,7 @@
 .boardContainer {
 	display: grid;
 	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(15rem, 5fr));
+	grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
 }
 
 .searchInput {

@@ -22,8 +22,10 @@
 
 	input[type='radio']:checked + label {
 		box-shadow: var(--bs-box-shadow-sm);
-		border: 1px solid var(--bs-primary-border-subtle);
-		transform: scale(1.08);
+		transform: scale(1.03);
+		background-color: var(--bs-light);
+		box-shadow: var(--bs-box-shadow);
+		transition: background-color 0.1s ease-in-out, transform 0.1s ease-in-out;
 	}
 
 	label {
@@ -42,6 +44,7 @@
 
 .subTaskList,
 .contactList {
+	margin-block: 1rem;
 	list-style: none;
 	padding: 0;
 
@@ -50,9 +53,8 @@
 	}
 }
 
-.buttonRow:last-child,
-.subTaskList {
-	margin-block-start: 1rem;
+.buttonRow:last-child {
+	margin-block: 2rem;
 }
 
 .contactList {
@@ -60,4 +62,20 @@
 	grid-template-columns: repeat(auto-fill, minmax(12rem, 2.5fr));
 	grid-gap: 10px 20px;
 	margin: 0;
+}
+
+label[for='subTasks'] {
+	display: block;
+}
+
+.addButton {
+	padding: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	margin-inline-start: 1rem;
+}
+
+.subTaskInput {
+	display: inline;
+	width: min(30rem, 75%);
 }

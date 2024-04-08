@@ -28,7 +28,6 @@ export default function App() {
 		localStorage.getItem('loggedIn')
 	);
 	let [message, setMessage] = useState('');
-
 	const navigate = useNavigate();
 
 	const handleLogin = () => {
@@ -77,9 +76,15 @@ export default function App() {
 						element={<UserDetails handleLogout={handleTimeout} />}
 					>
 						<Route path="summary" element={<Summary />} />
-						<Route path="viewTask/:id" element={<ViewTask />} />
+						<Route
+							path="viewTask/:id"
+							element={<ViewTask handleMessage={setMessage} />}
+						/>
 						<Route path="viewBoard" element={<ViewBoard />} />
-						<Route path="addTask" element={<AddTask handleMessage={setMessage} />} />
+						<Route
+							path="addTask"
+							element={<AddTask handleMessage={setMessage} />}
+						/>
 						<Route path="contacts" element={<Contacts />} />
 						<Route
 							path="contacts/addContact"

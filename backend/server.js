@@ -35,14 +35,16 @@ app.listen(5000, () => {
 });
 
 app.post('/register', async (req, res) => {
-	const { fname, lname, email, password, userType } = req.body;
+	const { fname, lname, email, password, userType, secretKey } = req.body;
 	const encryptedPassword = await bcrypt.hash(password, 10);
 
 	try {
+		if (secretKey && secretKey !== process.env.ADMIN_KEY)
+			return res.json({ error: 'Ungültiger Adminkey' });
+
 		const oldUser = await User.findOne({ email });
-		if (oldUser) {
-			return res.json({ error: 'User gibt es bereits' });
-		}
+		if (oldUser) return res.json({ error: 'User gibt es bereits' });
+
 		await User.create({
 			fname,
 			lname,
@@ -244,7 +246,7 @@ app.post('/deleteUser', async (req, res) => {
 	const { userid } = req.body;
 	try {
 		User.deleteOne({ _id: userid }, function () {});
-		res.send({ status: 'ok', data: 'geloescht' });
+		res.send({ status: 'ok', data: 'deleted' });
 	} catch (error) {
 		console.log(error);
 	}
@@ -359,5 +361,63 @@ app.get('/getAllTasks', async (req, res) => {
 		res.send({ status: 'ok', data: allUser });
 	} catch (error) {
 		console.log(error);
+	}
+});
+
+app.post('/findTask', async (req, res) => {
+	const { id } = req.body;
+	Task.findOne({ _id: id })
+		.then((data) => {
+			res.send({ status: 'ok', data: data });
+		})
+		.catch((error) => {
+			res.send({ status: 'error', data: error });
+		});
+});
+
+app.post('/deleteTask', async (req, res) => {
+	const { id } = req.body;
+	try {
+		Task.deleteOne({ _id: id }, function () {});
+		res.send({ status: 'ok', data: 'deleted' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.post('/updateTask', async (req, res) => {
+	const {
+		id,
+		title,
+		description,
+		department,
+		section,
+		assignedTo,
+		dueDate,
+		priority,
+		subTasks,
+	} = req.body;
+
+	try {
+		await Task.updateOne(
+			{
+				_id: id,
+			},
+			{
+				$set: {
+					title,
+					description,
+					department,
+					section,
+					assignedTo,
+					dueDate,
+					priority,
+					subTasks,
+				},
+			}
+		);
+		res.send({ status: 'ok' });
+	} catch (error) {
+		res.send({ status: 'error' });
 	}
 });

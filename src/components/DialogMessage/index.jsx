@@ -11,8 +11,17 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 	}, [activeDialog]);
 
 	const handleConfirmation = () => {
-		if (activeDialog.type == 'deletion') deleteUser(activeDialog.target);
-		if (activeDialog.type == 'edit') editUser(activeDialog);
+		const { type, target } = activeDialog;
+		const handlers = {
+			contactDeletion: deleteUser,
+			taskDeletion: deleteTask,
+			editContact: editUser,
+			editTask: editTask,
+		};
+
+		if (handlers[type]) {
+			handlers[type](target);
+		}
 	};
 
 	const deleteUser = (id) => {
@@ -38,6 +47,29 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 			});
 	};
 
+	const deleteTask = (id) => {
+		fetch('http://localhost:5000/deleteTask', {
+			method: 'POST',
+			crossDomain: true,
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: JSON.stringify({
+				id,
+			}),
+		})
+			.then((res) => res.json())
+			.then(() => {
+				handleMessage({
+					messageText: 'Deletion Successful',
+					messageType: 'positive',
+				});
+				navigate(activeDialog.navigateTo, { replace: true });
+			});
+	};
+
 	const editUser = () => {
 		fetch('http://localhost:5000/updateUser', {
 			method: 'POST',
@@ -49,14 +81,7 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 			},
 			body: JSON.stringify({
 				id: activeDialog.target,
-				fname: activeDialog.formData.fname,
-				lname: activeDialog.formData.lname,
-				email: activeDialog.formData.email,
-				password: activeDialog.formData.password,
-				userType: activeDialog.formData.userType,
-				phone: activeDialog.formData.phone,
-				note: activeDialog.formData.note,
-				color: activeDialog.formData.color,
+				...activeDialog.formData,
 			}),
 		})
 			.then((res) => res.json())
@@ -70,6 +95,38 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 				} else {
 					handleMessage({
 						messageText: 'User already exists. Change your data',
+						messageType: 'negative',
+					});
+				}
+			});
+	};
+
+	const editTask = () => {
+		fetch('http://localhost:5000/updateTask', {
+			method: 'POST',
+			crossDomain: true,
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				'Access-Control-Allow-Origin': '*',
+			},
+			body: JSON.stringify({
+				id: activeDialog.target,
+				...activeDialog.newTaskData,
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.status == 'ok') {
+					handleMessage({
+						messageText: 'Edit Successful',
+						messageType: 'positive',
+					});
+					navigate(activeDialog.navigateTo, { replace: true });
+					
+				} else {
+					handleMessage({
+						messageText: 'Ups... something went wrong',
 						messageType: 'negative',
 					});
 				}

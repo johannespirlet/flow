@@ -29,34 +29,23 @@ export default function ViewContact({ handleMessage }) {
 	};
 
 	useEffect(() => {
-		const getContactData = () => {
-			fetch('http://localhost:5000/findUser', {
-				method: 'POST',
-				crossDomain: true,
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					'Access-Control-Allow-Origin': '*',
-				},
-				body: JSON.stringify({
-					id: id,
-				}),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					setFormData({
-						fname: data.data.fname,
-						lname: data.data.lname,
-						email: data.data.email,
-						password: 'empty',
-						phone: data.data.phone,
-						note: data.data.note,
-						userType: data.data.userType,
-						color: data.data.color,
-					});
+		const fetchContactData = async () => {
+			try {
+				const response = await fetch(`http://localhost:5000/findUser`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Access-Control-Allow-Origin': '*',
+					},
+					body: JSON.stringify({ id }),
 				});
+				const { data } = await response.json();
+				setFormData(data);
+			} catch (error) {
+				console.error(error);
+			}
 		};
-		getContactData();
+		fetchContactData();
 	}, []);
 
 	const handleDeletionDialog = () => {
@@ -64,7 +53,7 @@ export default function ViewContact({ handleMessage }) {
 			dialogText: 'Are you sure to delete this contact?',
 			navigateTo: '../contacts',
 			target: id,
-			type: 'deletion',
+			type: 'contactDeletion',
 			buttonConfirmText: 'Delete',
 		};
 		setActiveDialog(notification);
@@ -76,7 +65,7 @@ export default function ViewContact({ handleMessage }) {
 			target: id,
 			navigateTo: '../contacts',
 			formData,
-			type: 'edit',
+			type: 'editContact',
 			buttonConfirmText: 'Edit',
 		};
 		setActiveDialog(notification);
@@ -232,7 +221,7 @@ export default function ViewContact({ handleMessage }) {
 						</div>
 
 						<div className={`${styles.buttonRow} ${styles.formRow}`}>
-							<Link to={'../Contacts'} className="btn btn-secondary">
+							<Link to={'../contacts'} className="btn btn-secondary">
 								<Icon icon={ICONS.cancel} size="1.5rem" color="white" />
 								Discard
 							</Link>
