@@ -13,7 +13,7 @@ export default function Summary() {
 	useEffect(() => {
 		const fetchTasks = async () => {
 			try {
-				const response = await fetch('http://localhost:5000/getAllTasks');
+				const response = await fetch('http://flow-eta-bay.vercel.app/getAllTasks');
 				const { data } = await response.json();
 				setTaskData(data);
 			} catch (error) {
@@ -22,7 +22,7 @@ export default function Summary() {
 		};
 		const fetchUsers = async () => {
 			try {
-				const response = await fetch('http://localhost:5000/getAllUser', {
+				const response = await fetch('http://flow-eta-bay.vercel.app/getAllUser', {
 					method: 'GET',
 				});
 				const data = await response.json();
