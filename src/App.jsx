@@ -70,7 +70,7 @@ export default function App() {
 		<>
 			<Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
 			<Routes>
-				<Route path="flow/" element={<AuthRoutes />}>
+				<Route path="/" element={<AuthRoutes />}>
 					<Route
 						path="board/"
 						element={<UserDetails handleLogout={handleTimeout} />}
