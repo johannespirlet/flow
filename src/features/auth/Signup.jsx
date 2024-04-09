@@ -88,7 +88,7 @@ export default function SignUp({ handleMessage }) {
 						name="userType"
 						value="User"
 						onChange={handleChange}
-						checked
+						checked={formData.userType === 'User'}
 					/>
 					<label htmlFor="user">User</label>
 					<input
@@ -102,7 +102,9 @@ export default function SignUp({ handleMessage }) {
 				</div>
 				{formData.userType == 'Admin' ? (
 					<div className="mb-3">
-						<label htmlFor="secretKey">Secret Key</label>
+						<div className={styles.labelRow}>
+							<label htmlFor="secretKey">Secret Key</label>
+						</div>
 						<input
 							type="text"
 							name="secretKey"

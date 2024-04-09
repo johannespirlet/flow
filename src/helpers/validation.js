@@ -1,5 +1,5 @@
 export const validateName = (name) => {
-	if (name.trim().length < 2) {
+	if (name.trim() === '') {
 		return 'Input cannot be empty';
 	}
 	return '';
