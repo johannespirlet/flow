@@ -6,7 +6,7 @@ export default function UserDetails({ handleLogout }) {
 	const [userData, setUserData] = useState('');
 
 	useEffect(() => {
-		fetch('http://localhost:5000/getUser', {
+		fetch('http://localhost:5000/userData', {
 			method: 'POST',
 			crossDomain: true,
 			headers: {

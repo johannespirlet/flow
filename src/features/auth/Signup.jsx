@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './auth.module.css';
+import {
+	validateName,
+	validateEmail,
+	validatePassword,
+} from '../../helpers/validation';
 
 export default function SignUp({ handleMessage }) {
 	const [formData, setFormData] = useState({
@@ -10,6 +15,12 @@ export default function SignUp({ handleMessage }) {
 		password: '',
 		userType: 'User',
 		secretKey: '',
+	});
+	const [formErrors, setFormErrors] = useState({
+		fname: '',
+		lname: '',
+		email: '',
+		password: '',
 	});
 	const navigate = useNavigate();
 
@@ -23,6 +34,20 @@ export default function SignUp({ handleMessage }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		if (
+			formErrors.fname ||
+			formErrors.lname ||
+			formErrors.email ||
+			formErrors.password
+		) {
+			handleMessage({
+				messageText: 'Please check your input and try again',
+				messageType: 'negative',
+			});
+			return;
+		}
+
 		fetch('http://localhost:5000/register', {
 			method: 'POST',
 			crossDomain: true,
@@ -90,7 +115,12 @@ export default function SignUp({ handleMessage }) {
 				) : null}
 
 				<div className="mb-3">
-					<label htmlFor="fname">First Name</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="fname">First Name</label>
+						{formErrors.fname && (
+							<span className={styles.formError}>{formErrors.fname}</span>
+						)}
+					</div>
 					<input
 						type="text"
 						name="fname"
@@ -98,12 +128,22 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter First Name"
 						onChange={handleChange}
-						required
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								fname: validateName(formData.fname),
+							})
+						}
 					/>
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="lname">Last Name</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="lname">Last Name</label>
+						{formErrors.lname && (
+							<span className={styles.formError}>{formErrors.lname}</span>
+						)}
+					</div>
 					<input
 						type="text"
 						name="lname"
@@ -111,12 +151,22 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter Last Name"
 						onChange={handleChange}
-						required
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								lname: validateName(formData.lname),
+							})
+						}
 					/>
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="email">E-Mail</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="email">E-Mail</label>
+						{formErrors.email && (
+							<span className={styles.formError}>{formErrors.email}</span>
+						)}
+					</div>
 					<input
 						type="email"
 						name="email"
@@ -125,12 +175,22 @@ export default function SignUp({ handleMessage }) {
 						placeholder="Enter E-Mail Address"
 						onChange={handleChange}
 						autoComplete="email"
-						required
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								email: validateEmail(formData.email),
+							})
+						}
 					/>
 				</div>
 
 				<div className="mb-3">
-					<label htmlFor="password">Password</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="password">Password</label>
+						{formErrors.password && (
+							<span className={styles.formError}>{formErrors.password}</span>
+						)}
+					</div>
 					<input
 						type="password"
 						name="password"
@@ -138,7 +198,12 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter Password"
 						onChange={handleChange}
-						required
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								password: validatePassword(formData.password),
+							})
+						}
 					/>
 				</div>
 

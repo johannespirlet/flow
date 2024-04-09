@@ -1,12 +1,16 @@
 .formContainer {
 	text-align: center;
-	width: 30rem;
+	width: 35rem;
 	margin: 2rem auto;
 	padding: 1rem 2rem;
 	background-color: rgb(247, 247, 247);
 	-webkit-box-shadow: 3px 2px 25px -7px rgba(0, 0, 0, 0.75);
 	-moz-box-shadow: 3px 2px 25px -7px rgba(0, 0, 0, 0.75);
 	box-shadow: 3px 2px 25px -7px rgba(0, 0, 0, 0.75);
+
+	h3 {
+		margin-block: 2rem;
+	}
 }
 
 .formContainer > * {
@@ -24,5 +28,17 @@
 }
 
 .formContainer > p:last-child {
+	color: var(--bs-danger);
+}
+
+.labelRow {
+	margin-block: 1.2rem 1rem;
+	height: 1.1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.formError {
 	color: var(--bs-danger);
 }

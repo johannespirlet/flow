@@ -1,40 +1,52 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './auth.module.css';
+import { validateEmail, validatePassword } from '../../helpers/validation';
 
 export default function Login({ handleLogin, handleMessage }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [formErrors, setFormErrors] = useState({
+		email: '',
+		password: '',
+	});
 
-	function handleSubmit(e) {
-		e.preventDefault();
+	function handleSubmit(event) {
+		event.preventDefault();
 
-		fetch('http://localhost:5000/login-user', {
+		if (formErrors.email || formErrors.password) {
+			handleMessage({
+				messageText: 'Please check your input and try again',
+				messageType: 'negative',
+			});
+			return;
+		}
+
+		const requestBody = {
+			email,
+			password,
+		};
+
+		const requestOptions = {
 			method: 'POST',
-			crossDomain: true,
 			headers: {
 				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				'Access-Control-Allow-Origin': '*',
 			},
-			body: JSON.stringify({
-				email,
-				password,
-			}),
-		})
-			.then((res) => res.json())
+			body: JSON.stringify(requestBody),
+		};
+
+		fetch('http://localhost:5000/login-user', requestOptions)
+			.then((response) => response.json())
 			.then((data) => {
-
-				if (data.status == 'ok') {
-
+				if (data.status === 'ok') {
 					window.localStorage.setItem('token', data.data);
 					handleLogin();
-
-				} else
+				} else {
 					handleMessage({
 						messageText: 'Invalid Userdata. Try again.',
 						messageType: 'negative',
 					});
+				}
 			});
 	}
 
@@ -49,11 +61,15 @@ export default function Login({ handleLogin, handleMessage }) {
 	return (
 		<div className={styles.authContainer}>
 			<form className={styles.formContainer} onSubmit={handleSubmit}>
-				{' '}
 				<title>Log Into Flow</title>
 				<h3>Sign In</h3>
 				<div className="mb-3">
-					<label htmlFor="email">E-Mail</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="email">E-Mail</label>
+						{formErrors.email && (
+							<span className={styles.formError}>{formErrors.email}</span>
+						)}
+					</div>
 					<input
 						id="email"
 						name="email"
@@ -61,12 +77,22 @@ export default function Login({ handleLogin, handleMessage }) {
 						className="form-control"
 						placeholder="Enter E-Mail"
 						onChange={(e) => setEmail(e.target.value)}
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								email: validateEmail(email),
+							})
+						}
 						autoComplete="email"
-						required
 					/>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="password">Password</label>
+					<div className={styles.labelRow}>
+						<label htmlFor="password">Password</label>
+						{formErrors.password && (
+							<span className={styles.formError}>{formErrors.password}</span>
+						)}
+					</div>
 					<input
 						id="password"
 						name="password"
@@ -74,7 +100,12 @@ export default function Login({ handleLogin, handleMessage }) {
 						className="form-control"
 						placeholder="Enter Password"
 						onChange={(e) => setPassword(e.target.value)}
-						required
+						onBlur={() =>
+							setFormErrors({
+								...formErrors,
+								password: validatePassword(password),
+							})
+						}
 					/>
 				</div>
 				<div className="mb-3">
