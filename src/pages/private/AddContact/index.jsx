@@ -24,36 +24,36 @@ export default function AddContact({ handleMessage }) {
 		});
 	};
 
-const handleSubmit = async (event) => {
-	event.preventDefault();
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 
-	try {
-		const response = await fetch('http://localhost:5000/addUser', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
-		});
-
-		const { status } = await response.json();
-
-		if (status === 'ok') {
-			handleMessage({
-				messageText: 'New contact added!',
-				messageType: 'positive',
+		try {
+			const response = await fetch('http://localhost:5000/addUser', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
 			});
-			navigate('../Contacts');
-		} else {
-			handleMessage({
-				messageText: 'User already exists. Please change your data',
-				messageType: 'negative',
-			});
+
+			const { status } = await response.json();
+
+			if (status === 'ok') {
+				handleMessage({
+					messageText: 'New contact added!',
+					messageType: 'positive',
+				});
+				navigate('../Contacts');
+			} else {
+				handleMessage({
+					messageText: 'User already exists. Please change your data',
+					messageType: 'negative',
+				});
+			}
+		} catch (error) {
+			console.error(error);
 		}
-	} catch (error) {
-		console.error(error);
-	}
-};
+	};
 
 	return (
 		<>

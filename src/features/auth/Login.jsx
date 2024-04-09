@@ -6,10 +6,9 @@ export default function Login({ handleLogin, handleMessage }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	//submit postet anfrage mit email und passwort an backend
 	function handleSubmit(e) {
 		e.preventDefault();
-		//fetch api
+
 		fetch('http://localhost:5000/login-user', {
 			method: 'POST',
 			crossDomain: true,
@@ -22,15 +21,15 @@ export default function Login({ handleLogin, handleMessage }) {
 				email,
 				password,
 			}),
-		}) //antwortdaten im richtigen datenformat weitergeben
+		})
 			.then((res) => res.json())
 			.then((data) => {
-				//falls status (aus backend ok) alert nachricht
+
 				if (data.status == 'ok') {
-					//packe token und loggedIn(true) eintrag in storage
+
 					window.localStorage.setItem('token', data.data);
 					handleLogin();
-					//und leite an userDetails weiter
+
 				} else
 					handleMessage({
 						messageText: 'Invalid Userdata. Try again.',

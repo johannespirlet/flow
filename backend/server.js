@@ -12,8 +12,8 @@ import './models/tasks.js';
 
 const app = express();
 app.use(express.json());
-app.use(cors()); //cors middleware erlaubt plattformuebergreifende http konversation
-app.set('view engine', 'ejs'); //baue ejs engine mit default views auf
+app.use(cors());
+app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 

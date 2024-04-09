@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import { Outlet } from 'react-router-dom';
 
-//private routing mit UserDetails Komponente
 export default function UserDetails({ handleLogout }) {
 	const [userData, setUserData] = useState('');
 
 	useEffect(() => {
-		fetch('http://localhost:5000/userData', {
+		fetch('http://localhost:5000/getUser', {
 			method: 'POST',
 			crossDomain: true,
 			headers: {
@@ -19,7 +18,7 @@ export default function UserDetails({ handleLogout }) {
 				token: window.localStorage.getItem('token'),
 			}),
 		})
-			.then((res) => res.json()) //gib body als promise mit json content zurueck
+			.then((res) => res.json())
 			.then((data) => {
 				if (data.data == 'token abgelaufen') {
 					handleLogout();
@@ -28,8 +27,7 @@ export default function UserDetails({ handleLogout }) {
 				}
 			});
 	});
-	//gib bei admin true AdminHome-Komponente zurueck ansonsten UserHome
-	// (jeweils mit props fuer begruessung)
+
 	if (!userData) {
 		return (
 			<ColorRing

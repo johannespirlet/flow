@@ -18,7 +18,6 @@ export default function Contacts() {
 		});
 	}
 
-
 	useEffect(() => {
 		const getAllUser = () => {
 			fetch('http://localhost:5000/getAllUser', {
@@ -31,7 +30,7 @@ export default function Contacts() {
 		};
 		getAllUser();
 
-		return () => { };
+		return () => {};
 	}, []);
 
 	if (!data) {

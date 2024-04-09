@@ -119,12 +119,14 @@ export default function AddTask({ handleMessage }) {
 		if (inputValue.trim() !== '') {
 			setTaskData({
 				...taskData,
-				subTasks: [...taskData.subTasks, { taskName: inputValue, checked: false }],
+				subTasks: [
+					...taskData.subTasks,
+					{ taskName: inputValue, checked: false },
+				],
 			});
 			setInputValue('');
 		}
-	}
-
+	};
 
 	const handleSubCheck = (taskName) => {
 		setTaskData({
@@ -267,11 +269,7 @@ export default function AddTask({ handleMessage }) {
 						/>
 						<label htmlFor="low">
 							Low
-							<Icon
-								icon={ICONS.low}
-								size="1.5rem"
-								color="var(--bs-success)"
-							/>
+							<Icon icon={ICONS.low} size="1.5rem" color="var(--bs-success)" />
 						</label>
 					</div>
 					<div className={styles.radioButton}>
@@ -303,11 +301,7 @@ export default function AddTask({ handleMessage }) {
 						/>
 						<label htmlFor="high">
 							High{' '}
-							<Icon
-								icon={ICONS.high}
-								size="1.5rem"
-								color="var(--bs-danger)"
-							/>
+							<Icon icon={ICONS.high} size="1.5rem" color="var(--bs-danger)" />
 						</label>
 					</div>
 				</div>
@@ -324,7 +318,10 @@ export default function AddTask({ handleMessage }) {
 						onChange={(e) => setInputValue(e.target.value)}
 						onKeyDown={handleKeypress}
 					/>
-					<button className={`btn btn-secondary ${styles.addButton}`} onClick={handleButtonPress}>
+					<button
+						className={`btn btn-secondary ${styles.addButton}`}
+						onClick={handleButtonPress}
+					>
 						<Icon icon={ICONS.add} size="2rem" color="var(--bs-white)" />
 					</button>
 				</div>

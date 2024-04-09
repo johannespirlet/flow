@@ -13,7 +13,7 @@ export default function Summary() {
 	useEffect(() => {
 		const fetchTasks = async () => {
 			try {
-				const response = await fetch('http://flow-eta-bay.vercel.app/getAllTasks');
+				const response = await fetch('http://localhost:5000/getAllTasks');
 				const { data } = await response.json();
 				setTaskData(data);
 			} catch (error) {
@@ -22,7 +22,7 @@ export default function Summary() {
 		};
 		const fetchUsers = async () => {
 			try {
-				const response = await fetch('http://flow-eta-bay.vercel.app/getAllUser', {
+				const response = await fetch('http://localhost:5000/getAllUser', {
 					method: 'GET',
 				});
 				const data = await response.json();
@@ -148,7 +148,11 @@ export default function Summary() {
 						<div
 							className={`${styles.gridIconContainer} ${styles.standardIcon}`}
 						>
-							<Icon icon={ICONS.checked2} size="3.8rem" color="var(--bs-white)" />
+							<Icon
+								icon={ICONS.checked2}
+								size="3.8rem"
+								color="var(--bs-white)"
+							/>
 						</div>
 						<div className={styles.flexColumn}>
 							<h1>
@@ -161,6 +165,4 @@ export default function Summary() {
 			</>
 		);
 	}
-
-	
 }
