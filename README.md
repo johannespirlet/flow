@@ -1,6 +1,6 @@
 # Flow
 
-Since GH Pages allows only static content, feel free to download flow to see all features.
+Feel free to download and test flow locally to see all features.
 
 Run vite server with npm on localhost using
 
