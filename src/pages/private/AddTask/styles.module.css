@@ -1,9 +1,10 @@
 .formContainer > label {
-	margin-block: 1rem 0.5rem;
+	margin-block: 1.2rem 1rem;
 }
 
 .buttonRow {
 	display: flex;
+	align-items: center;
 	gap: 1rem;
 }
 
@@ -20,20 +21,13 @@
 		z-index: 100;
 	}
 
-	input[type='radio']:checked + label {
-		box-shadow: var(--bs-box-shadow-sm);
-		transform: scale(1.03);
-		background-color: var(--bs-light);
-		box-shadow: var(--bs-box-shadow);
-		transition: background-color 0.1s ease-in-out, transform 0.1s ease-in-out;
-	}
-
 	label {
+		transition: background-color 0.1s ease-in-out, transform 0.1s ease-in-out,
+			color 0.1s ease-in-out;
 		border-radius: 10px;
-		border: 1px solid var(--bs-secondary-border-subtle);
-		background-color: var(--bs-gray-100);
 		padding: 0.4rem 0.8rem;
 		cursor: pointer;
+		user-select: none;
 	}
 
 	label:hover,
@@ -62,6 +56,22 @@
 	grid-template-columns: repeat(auto-fill, minmax(12rem, 2.5fr));
 	grid-gap: 10px 20px;
 	margin: 0;
+
+	input {
+		cursor: pointer;
+	}
+
+	label {
+		user-select: none;
+		cursor: pointer;
+		padding: 2px 9px 2px 2px;
+		border-radius: 10px;
+	}
+
+	label:hover,
+	label:focus-visible {
+		background-color: var(--bs-white);
+	}
 }
 
 label[for='subTasks'] {
@@ -78,4 +88,16 @@ label[for='subTasks'] {
 .subTaskInput {
 	display: inline;
 	width: min(30rem, 75%);
+}
+
+.labelRow {
+	margin-block: 1.2rem 1rem;
+	height: 1.1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.formError {
+	color: var(--bs-danger);
 }

@@ -14,11 +14,15 @@ export default function Login({ handleLogin, handleMessage }) {
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		if (formErrors.email || formErrors.password) {
+		const emailError = validateEmail(email);
+		const passwordError = validatePassword(password);
+
+		if (emailError || passwordError) {
 			handleMessage({
-				messageText: 'Please check your input and try again',
+				messageText: 'Please check your data and try again',
 				messageType: 'negative',
 			});
+			setFormErrors({ email: emailError, password: passwordError });
 			return;
 		}
 
@@ -60,7 +64,7 @@ export default function Login({ handleLogin, handleMessage }) {
 
 	return (
 		<div className={styles.authContainer}>
-			<form className={styles.formContainer} onSubmit={handleSubmit}>
+			<form className={styles.formContainer} onSubmit={handleSubmit} noValidate>
 				<title>Log Into Flow</title>
 				<h3>Sign In</h3>
 				<div className="mb-3">
@@ -77,13 +81,16 @@ export default function Login({ handleLogin, handleMessage }) {
 						className="form-control"
 						placeholder="Enter E-Mail"
 						onChange={(e) => setEmail(e.target.value)}
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								email: validateEmail(email),
-							})
-						}
 						autoComplete="email"
+						onBlur={
+							formErrors.email
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											email: validateEmail(e.target.value),
+										})
+								: null
+						}
 					/>
 				</div>
 				<div className="mb-3">
@@ -100,11 +107,14 @@ export default function Login({ handleLogin, handleMessage }) {
 						className="form-control"
 						placeholder="Enter Password"
 						onChange={(e) => setPassword(e.target.value)}
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								password: validatePassword(password),
-							})
+						onBlur={
+							formErrors.password
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											password: validatePassword(e.target.value),
+										})
+								: null
 						}
 					/>
 				</div>

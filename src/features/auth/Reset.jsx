@@ -1,22 +1,12 @@
 import { Link } from 'react-router-dom';
 import styles from './auth.module.css';
-import { validateEmail } from '../../helpers/validation';
 import { useState } from 'react';
 
 export default function Reset({ handleMessage }) {
 	const [email, setEmail] = useState('');
-	const [emailError, setEmailError] = useState('');
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		if (emailError) {
-			handleMessage({
-				messageText: 'Please enter a valid email address',
-				messageType: 'negative',
-			});
-			return;
-		}
 
 		try {
 			const response = await fetch('http://localhost:5000/forgot-password', {
@@ -43,14 +33,11 @@ export default function Reset({ handleMessage }) {
 
 	return (
 		<div className={styles.authContainer}>
-			<form className={styles.formContainer} onSubmit={handleSubmit}>
+			<form className={styles.formContainer} onSubmit={handleSubmit} noValidate>
 				<h3>Forgot Password</h3>
 				<div className="mb-3">
 					<div className={styles.labelRow}>
 						<label htmlFor="email">E-Mail</label>
-						{emailError && (
-							<span className={styles.formError}>{emailError}</span>
-						)}
 					</div>
 					<input
 						type="email"
@@ -59,7 +46,6 @@ export default function Reset({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter E-Mail"
 						onChange={(e) => setEmail(e.target.value)}
-						onBlur={(e) => setEmailError(validateEmail(e.target.value))}
 						autoComplete="email"
 					/>
 				</div>

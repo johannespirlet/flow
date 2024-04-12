@@ -35,15 +35,21 @@ export default function SignUp({ handleMessage }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (
-			formErrors.fname ||
-			formErrors.lname ||
-			formErrors.email ||
-			formErrors.password
-		) {
+		const fnameError = validateName(formData.fname);
+		const lnameError = validateName(formData.lname);
+		const emailError = validateEmail(formData.email);
+		const passwordError = validatePassword(formData.password);
+
+		if (fnameError || lnameError || emailError || passwordError) {
 			handleMessage({
 				messageText: 'Please check your input and try again',
 				messageType: 'negative',
+			});
+			setFormErrors({
+				fname: fnameError,
+				lname: lnameError,
+				email: emailError,
+				password: passwordError,
 			});
 			return;
 		}
@@ -77,7 +83,7 @@ export default function SignUp({ handleMessage }) {
 
 	return (
 		<div className={styles.authContainer}>
-			<form className={styles.formContainer} onSubmit={handleSubmit}>
+			<form className={styles.formContainer} onSubmit={handleSubmit} noValidate>
 				<title>Sign Up to Flow</title>
 				<h3>Sign Up</h3>
 				<div>
@@ -130,11 +136,14 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter First Name"
 						onChange={handleChange}
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								fname: validateName(formData.fname),
-							})
+						onBlur={
+							formErrors.fname
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											fname: validateName(e.target.value),
+										})
+								: null
 						}
 					/>
 				</div>
@@ -153,11 +162,14 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter Last Name"
 						onChange={handleChange}
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								lname: validateName(formData.lname),
-							})
+						onBlur={
+							formErrors.lname
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											lname: validateName(e.target.value),
+										})
+								: null
 						}
 					/>
 				</div>
@@ -176,13 +188,16 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter E-Mail Address"
 						onChange={handleChange}
-						autoComplete="email"
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								email: validateEmail(formData.email),
-							})
+						onBlur={
+							formErrors.email
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											email: validateEmail(e.target.value),
+										})
+								: null
 						}
+						autoComplete="email"
 					/>
 				</div>
 
@@ -200,11 +215,14 @@ export default function SignUp({ handleMessage }) {
 						className="form-control"
 						placeholder="Enter Password"
 						onChange={handleChange}
-						onBlur={() =>
-							setFormErrors({
-								...formErrors,
-								password: validatePassword(formData.password),
-							})
+						onBlur={
+							formErrors.password
+								? (e) =>
+										setFormErrors({
+											...formErrors,
+											password: validatePassword(e.target.value),
+										})
+								: null
 						}
 					/>
 				</div>

@@ -125,7 +125,7 @@ app.post('/forgot-password', async (req, res) => {
 		const oldUser = await User.findOne({ email });
 
 		if (!oldUser) {
-			return res.json({ status: 'err', data: "User doesn't exist" });
+			return res.json({ status: 'err', data: "E-Mail doesn't exist" });
 		}
 
 		const secret = process.env.JWT_SECRET + oldUser.password;

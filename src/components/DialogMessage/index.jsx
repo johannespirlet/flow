@@ -81,7 +81,7 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 			},
 			body: JSON.stringify({
 				id: activeDialog.target,
-				...activeDialog.formData,
+				...activeDialog.newFormData,
 			}),
 		})
 			.then((res) => res.json())
@@ -123,7 +123,6 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 						messageType: 'positive',
 					});
 					navigate(activeDialog.navigateTo, { replace: true });
-					
 				} else {
 					handleMessage({
 						messageText: 'Ups... something went wrong',

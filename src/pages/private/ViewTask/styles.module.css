@@ -37,7 +37,8 @@
 	background-color: var(--bs-white);
 }
 
-.taskContainer > *, .formContainer > * {
+.taskContainer > *,
+.formContainer > * {
 	margin-block-start: 1.5rem;
 }
 
@@ -103,7 +104,7 @@
 	gap: 1rem;
 
 	svg {
-		margin-inline-end: .3rem;
+		margin-inline-end: 0.3rem;
 	}
 }
 
@@ -161,6 +162,22 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(12rem, 2.5fr));
 	grid-gap: 10px 20px;
+
+	input {
+		cursor: pointer;
+	}
+
+	label {
+		user-select: none;
+		cursor: pointer;
+		padding: 2px 9px 2px 2px;
+	}
+
+	label:hover,
+	label:focus-visible {
+		background-color: var(--bs-gray-200);
+		border-radius: 10px;
+	}
 }
 
 label[for='subTasks'] {
@@ -168,7 +185,7 @@ label[for='subTasks'] {
 }
 
 label[for='section'] > strong {
-	text-wrap:nowrap;
+	text-wrap: nowrap;
 }
 
 .addButton {
@@ -183,3 +200,15 @@ label[for='section'] > strong {
 	width: min(30rem, 75%);
 }
 
+.labelRow {
+	margin-block: 1.2rem 1rem;
+	height: 1.1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.formError {
+	color: var(--bs-danger);
+	white-space: nowrap;
+}

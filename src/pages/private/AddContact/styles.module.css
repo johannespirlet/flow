@@ -20,11 +20,15 @@
 
   .formRow {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
   }
 
   .formRow svg {
     margin: 0 7px 3px 0;
+  }
+
+  .formRow:not(:first-child) div {
+    flex: 1;
   }
 
   .formRow div label:first-child {
@@ -33,4 +37,16 @@
 
   .formRow:last-child > * {
     padding-bottom: 3px;
+  }
+
+  .labelRow {
+    margin-block: 1.2rem 1rem;
+    height: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .formError {
+    color: var(--bs-danger);
   }

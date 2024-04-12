@@ -1,4 +1,4 @@
-import { useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Icon from '../../../assets/icons/Icon';
@@ -78,20 +78,30 @@ export default function Summary() {
 					<h2>Everything in a nutshell</h2>
 				</header>
 				<div className={styles.gridContainer}>
-					<div className={`${styles.gridItem} ${styles.flexColumn}`}>
+					<Link
+						to="../viewBoard"
+						className={`${styles.gridItem} ${styles.flexColumn}`}
+					>
 						<h1>1</h1>
 						<h3>Active Board</h3>
-					</div>
-					<div className={`${styles.gridItem} ${styles.flexColumn}`}>
+					</Link>
+					<Link
+						to="../viewBoard"
+						className={`${styles.gridItem} ${styles.flexColumn}`}
+					>
 						<h1>{taskData.length}</h1>
 						<h3>Tasks on Board</h3>
-					</div>
-					<div className={`${styles.gridItem} ${styles.flexColumn}`}>
+					</Link>
+					<Link
+						to="../contacts"
+						className={`${styles.gridItem} ${styles.flexColumn}`}
+					>
 						<h1>{contacts.length}</h1>
 
 						<h3>Contacts</h3>
-					</div>
-					<div
+					</Link>
+					<Link
+						to="../viewBoard?searchInput=high"
 						className={`${styles.gridItem} ${styles.flexRowCenter} ${styles.longGridItem}`}
 					>
 						<div className={styles.flexRowCenter}>
@@ -104,7 +114,7 @@ export default function Summary() {
 								<h2>
 									{taskData.filter((task) => task.priority === 'high').length}
 								</h2>
-								<p>Urgent Tasks</p>
+								<p>Important Tasks</p>
 							</div>
 						</div>
 						<div className={styles.divider} />
@@ -112,26 +122,25 @@ export default function Summary() {
 							<h2>{formatDate(minDueDate)}</h2>
 							<p>Upcoming Deadline</p>
 						</div>
-					</div>
-					<div className={`${styles.gridItem} ${styles.flexColumn}`}>
+					</Link>
+					<Link to="../viewBoard?searchInput=in+progress" className={`${styles.gridItem} ${styles.flexColumn}`}>
 						<h1>
 							{taskData.filter((task) => task.section === 'In Progress').length}
 						</h1>
 
 						<h3>Tasks in Progress</h3>
-					</div>
-					<div className={`${styles.gridItem} ${styles.flexColumn}`}>
+					</Link>
+					<Link to="../viewBoard?searchInput=awaiting+feedback" className={`${styles.gridItem} ${styles.flexColumn}`}>
 						<h1>
 							{
 								taskData.filter((task) => task.section === 'Awaiting Feedback')
 									.length
 							}
 						</h1>
-
 						<h3>Awaiting Feedback</h3>
-					</div>
+					</Link>
 
-					<div className={`${styles.gridItem} ${styles.flexRowCenter}`}>
+					<Link to="../viewBoard?searchInput=to+do" className={`${styles.gridItem} ${styles.flexRowCenter}`}>
 						<div
 							className={`${styles.gridIconContainer} ${styles.standardIcon}`}
 						>
@@ -143,8 +152,8 @@ export default function Summary() {
 							</h1>
 							<h3>To Do</h3>
 						</div>
-					</div>
-					<div className={`${styles.gridItem} ${styles.flexRowCenter}`}>
+					</Link>
+					<Link to="../viewBoard?searchInput=done" className={`${styles.gridItem} ${styles.flexRowCenter}`}>
 						<div
 							className={`${styles.gridIconContainer} ${styles.standardIcon}`}
 						>
@@ -160,7 +169,7 @@ export default function Summary() {
 							</h1>
 							<h3>Done</h3>
 						</div>
-					</div>
+					</Link>
 				</div>
 			</>
 		);

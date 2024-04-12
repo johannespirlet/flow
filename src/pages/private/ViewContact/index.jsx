@@ -4,26 +4,25 @@ import { useState, useEffect } from 'react';
 import DialogMessage from '../../../components/DialogMessage';
 import { ICONS } from '../../../assets/icons/icons';
 import Icon from '../../../assets/icons/Icon';
+import {
+	validateName,
+	validateEmail,
+	validatePassword,
+} from '../../../helpers/validation';
 
 export default function ViewContact({ handleMessage }) {
 	const { id } = useParams();
 	const userData = useOutletContext();
 	const [activeDialog, setActiveDialog] = useState('');
 	const [isEditable, setIsEditable] = useState(false);
-	const [formData, setFormData] = useState({
-		fname: '',
-		lname: '',
-		email: '',
-		password: '',
-		phone: '',
-		note: '',
-		userType: '',
-	});
+	const [formData, setFormData] = useState({});
+	const [newFormData, setNewFormData] = useState({});
+	const [formErrors, setFormErrors] = useState({});
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setFormData({
-			...formData,
+		setNewFormData({
+			...newFormData,
 			[name]: value,
 		});
 	};
@@ -41,6 +40,7 @@ export default function ViewContact({ handleMessage }) {
 				});
 				const { data } = await response.json();
 				setFormData(data);
+				setNewFormData(data);
 			} catch (error) {
 				console.error(error);
 			}
@@ -58,13 +58,34 @@ export default function ViewContact({ handleMessage }) {
 		};
 		setActiveDialog(notification);
 	};
+
 	const handleEditSubmit = (e) => {
 		e.preventDefault();
+
+		const fnameError = validateName(newFormData.fname);
+		const lnameError = validateName(newFormData.lname);
+		const emailError = validateEmail(newFormData.email);
+		const passwordError = validatePassword(newFormData.password);
+
+		if (fnameError || lnameError || emailError || passwordError) {
+			handleMessage({
+				messageText: 'Please check your input and try again',
+				messageType: 'negative',
+			});
+			setFormErrors({
+				fname: fnameError,
+				lname: lnameError,
+				email: emailError,
+				password: passwordError,
+			});
+			return;
+		}
+
 		let notification = {
 			dialogText: 'Are you sure to edit this contact?',
 			target: id,
 			navigateTo: '../contacts',
-			formData,
+			newFormData,
 			type: 'editContact',
 			buttonConfirmText: 'Edit',
 		};
@@ -87,7 +108,7 @@ export default function ViewContact({ handleMessage }) {
 					</h2>
 				</div>
 				<div className={styles.btnBox}>
-					{userData.userType == 'Admin' && (
+					{userData.userType === 'Admin' && (
 						<button
 							className={`btn btn-secondary ${styles.contactBtn}`}
 							onClick={handleDeletionDialog}
@@ -107,8 +128,12 @@ export default function ViewContact({ handleMessage }) {
 			</header>
 			<div>
 				{isEditable ? (
-					<form onSubmit={handleEditSubmit} className={styles.formContainer}>
-						{userData.userType == 'Admin' && (
+					<form
+						onSubmit={handleEditSubmit}
+						className={styles.formContainer}
+						noValidate
+					>
+						{userData.userType === 'Admin' && (
 							<div className={styles.formRow}>
 								Select a Usertype
 								<div>
@@ -116,7 +141,7 @@ export default function ViewContact({ handleMessage }) {
 										type="radio"
 										id="user"
 										name="userType"
-										checked={formData.userType == 'User'}
+										checked={newFormData.userType === 'User'}
 										value="User"
 										onChange={handleChange}
 									/>
@@ -127,7 +152,7 @@ export default function ViewContact({ handleMessage }) {
 										type="radio"
 										id="admin"
 										name="userType"
-										checked={formData.userType == 'Admin'}
+										checked={newFormData.userType === 'Admin'}
 										value="Admin"
 										onChange={handleChange}
 									/>
@@ -138,46 +163,97 @@ export default function ViewContact({ handleMessage }) {
 
 						<div className={styles.formRow}>
 							<div>
-								<label htmlFor="fname">First Name</label>
+								<div className={styles.labelRow}>
+									<label htmlFor="fname">First Name</label>
+									{formErrors.fname && (
+										<span className={styles.formError}>{formErrors.fname}</span>
+									)}
+								</div>
 								<input
 									type="text"
 									name="fname"
 									id="fname"
 									className="form-control"
-									value={formData.fname}
+									value={newFormData.fname}
 									onChange={handleChange}
+									onBlur={
+										formErrors.fname
+											? (e) =>
+													setFormErrors({
+														...formErrors,
+														fname: validateName(e.target.value),
+													})
+											: null
+									}
 								/>
 							</div>
 							<div>
-								<label htmlFor="lname">Last Name</label>
+								<div className={styles.labelRow}>
+									<label htmlFor="lname">Last Name</label>
+									{formErrors.lname && (
+										<span className={styles.formError}>{formErrors.lname}</span>
+									)}
+								</div>
 								<input
 									type="text"
 									name="lname"
 									id="lname"
-									value={formData.lname}
+									value={newFormData.lname}
 									className="form-control"
 									onChange={handleChange}
 									autoComplete="off"
+									onBlur={
+										formErrors.lname
+											? (e) =>
+													setFormErrors({
+														...formErrors,
+														lname: validateName(e.target.value),
+													})
+											: null
+									}
 								/>
 							</div>
 						</div>
 
-						{userData.userType == 'Admin' && (
+						{userData.userType === 'Admin' && (
 							<div className={styles.formRow}>
 								<div>
-									<label htmlFor="email">E-Mail Address</label>
+									<div className={styles.labelRow}>
+										<label htmlFor="email">E-Mail</label>
+										{formErrors.email && (
+											<span className={styles.formError}>
+												{formErrors.email}
+											</span>
+										)}
+									</div>
 									<input
 										type="email"
 										id="email"
 										name="email"
 										className="form-control"
-										value={formData.email}
+										value={newFormData.email}
 										onChange={handleChange}
 										autoComplete="off"
+										onBlur={
+											formErrors.email
+												? (e) =>
+														setFormErrors({
+															...formErrors,
+															email: validateEmail(e.target.value),
+														})
+												: null
+										}
 									/>
 								</div>
 								<div>
-									<label htmlFor="password">Password</label>
+									<div className={styles.labelRow}>
+										<label htmlFor="password">Password</label>
+										{formErrors.password && (
+											<span className={styles.formError}>
+												{formErrors.password}
+											</span>
+										)}
+									</div>
 									<input
 										type="password"
 										id="password"
@@ -186,6 +262,15 @@ export default function ViewContact({ handleMessage }) {
 										className="form-control"
 										onChange={handleChange}
 										autoComplete="off"
+										onBlur={
+											formErrors.password
+												? (e) =>
+														setFormErrors({
+															...formErrors,
+															password: validatePassword(e.target.value),
+														})
+												: null
+										}
 									/>
 								</div>
 							</div>
@@ -198,7 +283,7 @@ export default function ViewContact({ handleMessage }) {
 									type="text"
 									id="phone"
 									name="phone"
-									value={formData.phone}
+									value={newFormData.phone}
 									placeholder="Enter a Phonenumber"
 									className="form-control"
 									onChange={handleChange}
@@ -213,7 +298,7 @@ export default function ViewContact({ handleMessage }) {
 									name="note"
 									placeholder="Enter a Note"
 									className="form-control"
-									value={formData.note}
+									value={newFormData.note}
 									onChange={handleChange}
 									autoComplete="off"
 								/>

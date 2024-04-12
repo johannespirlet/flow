@@ -6,6 +6,7 @@ import { ICONS } from '../../../assets/icons/icons';
 import Icon from '../../../assets/icons/Icon';
 import { ColorRing } from 'react-loader-spinner';
 import DialogMessage from '../../../components/DialogMessage';
+import { validateName, validateArray } from '../../../helpers/validation';
 
 export default function ViewTask({ handleMessage }) {
 	const { id } = useParams();
@@ -15,6 +16,7 @@ export default function ViewTask({ handleMessage }) {
 	const [activeDialog, setActiveDialog] = useState('');
 	const [contacts, setContacts] = useState([]);
 	const [inputValue, setInputValue] = useState('');
+	const [formErrors, setFormErrors] = useState({});
 
 	useEffect(() => {
 		const fetchTaskData = async () => {
@@ -52,10 +54,13 @@ export default function ViewTask({ handleMessage }) {
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		if (name === 'assignedTo') {
-			const ifExists = taskData.assignedTo.find(({ id }) => id === value);
+			const ifExists = newTaskData.assignedTo.find(({ id }) => id === value);
 			const { color, _id, fname, lname } = contacts.find(
 				({ _id }) => _id === value
 			);
+			if (formErrors.assignedTo && newTaskData.assignedTo.length === 0)
+				setFormErrors({ ...formErrors, assignedTo: '' });
+
 			if (ifExists !== undefined) {
 				setNewTaskData({
 					...newTaskData,
@@ -113,6 +118,22 @@ export default function ViewTask({ handleMessage }) {
 	};
 	const handleEditSubmit = (e) => {
 		e.preventDefault();
+
+		const titleError = validateName(newTaskData.title);
+		const assignedToError = validateArray(newTaskData.assignedTo);
+
+		if (titleError || assignedToError) {
+			handleMessage({
+				messageText: 'Please check your input and try again',
+				messageType: 'negative',
+			});
+			setFormErrors({
+				title: titleError,
+				assignedTo: assignedToError,
+			});
+			return;
+		}
+
 		let notification = {
 			dialogText: 'Are you sure to edit this task like this?',
 			target: id,
@@ -301,9 +322,16 @@ export default function ViewTask({ handleMessage }) {
 							</div>
 						)}
 						<div className={styles.flexrowStart}>
-							<label htmlFor="assignedTo">
-								<strong>Task is assigned to</strong>
-							</label>
+							<div className={styles.labelRow}>
+								<label htmlFor="assignedTo">
+									<strong>Task is assigned to</strong>
+								</label>
+								{formErrors.assignedTo && (
+									<span className={styles.formError}>
+										{formErrors.assignedTo}
+									</span>
+								)}
+							</div>
 							<ul className={styles.inlineList}>
 								{assignedTo.map(({ initials, color, id, fname, lname }) => {
 									return (
@@ -324,11 +352,16 @@ export default function ViewTask({ handleMessage }) {
 						</div>
 					</>
 				) : (
-					<form onSubmit={handleEditSubmit} className={styles.formContainer}>
+					<form
+						onSubmit={handleEditSubmit}
+						className={styles.formContainer}
+						noValidate
+					>
 						<div className={styles.flexrowCenter}>
 							<label htmlFor="title">
 								<strong>Title</strong>
 							</label>
+
 							<input
 								type="text"
 								className="form-control"
@@ -338,8 +371,19 @@ export default function ViewTask({ handleMessage }) {
 								value={newTaskData.title}
 								onChange={handleChange}
 								autoComplete="off"
-								required
+								onBlur={
+									formErrors.title
+										? (e) =>
+												setFormErrors({
+													...formErrors,
+													title: validateName(e.target.value),
+												})
+										: null
+								}
 							/>
+							{formErrors.title && (
+								<span className={styles.formError}>{formErrors.title}</span>
+							)}
 						</div>
 						<div className={styles.flexrowCenter}>
 							<label htmlFor="description">
@@ -366,11 +410,7 @@ export default function ViewTask({ handleMessage }) {
 								id="department"
 								name="department"
 								className="form-select"
-								required
 							>
-								<option value={newTaskData.department}>
-									{newTaskData.department}
-								</option>
 								{departments.map(({ id, name, color }) => {
 									if (newTaskData.department !== name)
 										return (
@@ -387,9 +427,16 @@ export default function ViewTask({ handleMessage }) {
 							</select>
 						</div>
 						<div>
-							<label htmlFor="assignedTo">
-								<strong>Assigned To</strong>
-							</label>
+							<div className={styles.labelRow}>
+								<label htmlFor="assignedTo">
+									<strong>Assigned To</strong>
+								</label>
+								{formErrors.assignedTo && (
+									<span className={styles.formError}>
+										{formErrors.assignedTo}
+									</span>
+								)}
+							</div>
 							<ul className={styles.contactList} id="assignedTo">
 								{contacts &&
 									contacts.map(({ _id, fname, lname }) => {
@@ -430,7 +477,7 @@ export default function ViewTask({ handleMessage }) {
 						<div className={styles.flexrowCenter}>
 							<label htmlFor="low">
 								<strong>Prio</strong>
-							</label>{' '}
+							</label>
 							<div className={styles.buttonRow}>
 								<div className={styles.radioButton}>
 									<input

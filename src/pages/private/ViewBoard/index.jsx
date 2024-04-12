@@ -17,18 +17,17 @@ export default function ViewBoard() {
 	useEffect(() => {
 		const url = new URL(window.location.href);
 		const searchParam = url.searchParams.get('searchInput');
+		fetchTasks();
 		if (searchParam) {
 			setSearchInput(searchParam);
 			filterTasks(searchParam);
-		} else {
-			fetchTasks();
 		}
 	}, []);
 
 	useEffect(() => {
 		const url = new URL(window.location.href);
 
-		if (debouncedSearchInput.length >= 3) {
+		if (debouncedSearchInput.length >= 2) {
 			url.searchParams.set('searchInput', debouncedSearchInput);
 			history.replaceState({}, '', url);
 			filterTasks(debouncedSearchInput);
@@ -50,12 +49,20 @@ export default function ViewBoard() {
 	};
 
 	const filterTasks = (searchTerm) => {
-		const searchedTasks = taskData.filter(({ title, description }) => {
-			return (
-				title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				description.toLowerCase().includes(searchTerm.toLowerCase())
-			);
-		});
+		if (!taskData) {
+			return;
+		}
+		const searchedTasks = taskData.filter(
+			({ title, description, priority, department, section }) => {
+				return (
+					title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					priority.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					section.toLowerCase().includes(searchTerm.toLowerCase())
+				);
+			}
+		);
 		setFilteredTasks(searchedTasks);
 	};
 
@@ -77,7 +84,6 @@ export default function ViewBoard() {
 			/>
 		);
 	}
-
 	return (
 		<>
 			<title>Boardview</title>
