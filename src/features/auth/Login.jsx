@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './auth.module.css';
 import { validateEmail, validatePassword } from '../../helpers/validation';
+import { useAuth } from '../../utils/AuthProvider';
 
-export default function Login({ handleLogin, handleMessage }) {
+export default function Login({ dispatchMessage }) {
+	const { login } = useAuth();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [formErrors, setFormErrors] = useState({
@@ -18,9 +20,12 @@ export default function Login({ handleLogin, handleMessage }) {
 		const passwordError = validatePassword(password);
 
 		if (emailError || passwordError) {
-			handleMessage({
-				messageText: 'Please check your data and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({ email: emailError, password: passwordError });
 			return;
@@ -44,11 +49,14 @@ export default function Login({ handleLogin, handleMessage }) {
 			.then((data) => {
 				if (data.status === 'ok') {
 					window.localStorage.setItem('token', data.data);
-					handleLogin();
+					login();
 				} else {
-					handleMessage({
-						messageText: 'Invalid Userdata. Try again.',
-						messageType: 'negative',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'Invalid Userdata. Try again.',
+							messageType: 'negative',
+						},
 					});
 				}
 			});
@@ -59,7 +67,7 @@ export default function Login({ handleLogin, handleMessage }) {
 			'token',
 			JSON.stringify({ fname: 'Guestuser', lname: '', userType: 'Guest' })
 		);
-		handleLogin();
+		login();
 	}
 
 	return (

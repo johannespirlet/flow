@@ -1,6 +1,7 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ColorRing } from 'react-loader-spinner';
+import { useAuth } from '../../../utils/AuthProvider';
 
 import styles from './styles.module.css';
 import Icon from '../../../assets/icons/Icon';
@@ -8,7 +9,7 @@ import { ICONS } from '../../../assets/icons/icons';
 
 export default function Contacts() {
 	const [data, setData] = useState();
-	const userData = useOutletContext();
+	const { userData } = useAuth();
 
 	function sortData(data) {
 		return data.sort(function (a, b) {

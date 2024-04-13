@@ -3,20 +3,24 @@ import { Link } from 'react-router-dom';
 import CustomLink from '../CustomLink';
 import { ICONS } from '../../assets/icons/icons.js';
 import Icon from '../../assets/icons/Icon.jsx';
+import { useAuth } from '../../utils/AuthProvider.jsx';
 
-export default function Navbar({ isLoggedIn, handleLogout }) {
+export default function Navbar() {
+
+	const { isLoggedIn, logout } = useAuth();
+
 	return (
 		<nav className={styles.nav}>
-			<Link to="board/summary" className={styles.siteTitle}>
+			<Link to="summary" className={styles.siteTitle}>
 				Flow
 			</Link>
 			<ul>
 				{isLoggedIn ? (
 					<>
-						<CustomLink to="board/settings">
+						<CustomLink to="settings">
 							<Icon icon={ICONS.settings} size="1.6rem" color="white" />
 						</CustomLink>
-						<CustomLink to="/" onClick={handleLogout}>
+						<CustomLink to="/public/home" onClick={logout}>
 							<Icon icon={ICONS.logout} size="1.8rem" color="white" />
 						</CustomLink>
 					</>

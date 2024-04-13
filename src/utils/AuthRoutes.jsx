@@ -1,9 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import Board from '../layouts/Board';
+import { useAuth } from './AuthProvider';
 
 const AuthRoutes = () => {
-	let auth = window.localStorage.getItem('loggedIn');
-	return auth ? <Board /> : <Navigate to="public/home" replace={true} />;
+	const { isLoggedIn } = useAuth();
+
+	return isLoggedIn ? <Board /> : <Navigate to="../public/home" replace={true} />;
 };
 
 export default AuthRoutes;

@@ -7,7 +7,7 @@ import {
 	validatePassword,
 } from '../../helpers/validation';
 
-export default function SignUp({ handleMessage }) {
+export default function SignUp({ dispatchMessage }) {
 	const [formData, setFormData] = useState({
 		fname: '',
 		lname: '',
@@ -16,12 +16,7 @@ export default function SignUp({ handleMessage }) {
 		userType: 'User',
 		secretKey: '',
 	});
-	const [formErrors, setFormErrors] = useState({
-		fname: '',
-		lname: '',
-		email: '',
-		password: '',
-	});
+	const [formErrors, setFormErrors] = useState({});
 	const navigate = useNavigate();
 
 	const handleChange = (event) => {
@@ -41,9 +36,12 @@ export default function SignUp({ handleMessage }) {
 		const passwordError = validatePassword(formData.password);
 
 		if (fnameError || lnameError || emailError || passwordError) {
-			handleMessage({
-				messageText: 'Please check your input and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({
 				fname: fnameError,
@@ -67,15 +65,21 @@ export default function SignUp({ handleMessage }) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.status == 'ok') {
-					handleMessage({
-						messageText: 'Registrierung erfolgreich! You may sign in now.',
-						messageType: 'positive',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'Registration successful! You may sign in now.',
+							messageType: 'positive',
+						},
 					});
 					navigate('../sign-in');
 				} else {
-					handleMessage({
-						messageText: data.error,
-						messageType: 'negative',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: data.error,
+							messageType: 'negative',
+						},
 					});
 				}
 			});

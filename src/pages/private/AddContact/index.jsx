@@ -9,7 +9,7 @@ import {
 	validatePassword,
 } from '../../../helpers/validation';
 
-export default function AddContact({ handleMessage }) {
+export default function AddContact({ dispatchMessage }) {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		userType: 'User',
@@ -37,9 +37,12 @@ export default function AddContact({ handleMessage }) {
 		const passwordError = validatePassword(formData.password);
 
 		if (fnameError || lnameError || emailError || passwordError) {
-			handleMessage({
-				messageText: 'Please check your input and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({
 				fname: fnameError,
@@ -62,15 +65,21 @@ export default function AddContact({ handleMessage }) {
 			const { status } = await response.json();
 
 			if (status === 'ok') {
-				handleMessage({
-					messageText: 'New contact added!',
-					messageType: 'positive',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'New contact added!',
+						messageType: 'positive',
+					},
 				});
 				navigate('../Contacts');
 			} else {
-				handleMessage({
-					messageText: 'User already exists. Please change your data',
-					messageType: 'negative',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'User already exists. Please change your data',
+						messageType: 'negative',
+					},
 				});
 			}
 		} catch (error) {

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styles from './auth.module.css';
 import { useState } from 'react';
 
-export default function Reset({ handleMessage }) {
+export default function Reset({ dispatchMessage }) {
 	const [email, setEmail] = useState('');
 
 	const handleSubmit = async (e) => {
@@ -20,12 +20,13 @@ export default function Reset({ handleMessage }) {
 
 			const { data, status } = await response.json();
 
-			const notification = {
-				messageText: data,
-				messageType: status === 'ok' ? 'positive' : 'negative',
-			};
-
-			handleMessage(notification);
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: data,
+					messageType: status === 'ok' ? 'positive' : 'negative',
+				},
+			});
 		} catch (error) {
 			console.error(error);
 		}

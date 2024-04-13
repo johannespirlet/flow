@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 
-export default function DialogMessage({ handleMessage, activeDialog }) {
+export default function DialogMessage({ dispatchMessage, activeDialog }) {
 	const [isVisible, setIsVisible] = useState(false);
 	const navigate = useNavigate();
 
@@ -39,9 +39,12 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 		})
 			.then((res) => res.json())
 			.then(() => {
-				handleMessage({
-					messageText: 'Deletion Successful',
-					messageType: 'positive',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'Deletion Successful',
+						messageType: 'positive',
+					},
 				});
 				navigate(activeDialog.navigateTo, { replace: true });
 			});
@@ -62,9 +65,12 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 		})
 			.then((res) => res.json())
 			.then(() => {
-				handleMessage({
-					messageText: 'Deletion Successful',
-					messageType: 'positive',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'Deletion Successful',
+						messageType: 'positive',
+					},
 				});
 				navigate(activeDialog.navigateTo, { replace: true });
 			});
@@ -87,15 +93,21 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.status == 'ok') {
-					handleMessage({
-						messageText: 'Edit Successful',
-						messageType: 'positive',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'Edit Successful',
+							messageType: 'positive',
+						},
 					});
 					navigate(activeDialog.navigateTo, { replace: true });
 				} else {
-					handleMessage({
-						messageText: 'User already exists. Change your data',
-						messageType: 'negative',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'User already exists. Change your data',
+							messageType: 'negative',
+						},
 					});
 				}
 			});
@@ -118,15 +130,21 @@ export default function DialogMessage({ handleMessage, activeDialog }) {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.status == 'ok') {
-					handleMessage({
-						messageText: 'Edit Successful',
-						messageType: 'positive',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'Edit Successful',
+							messageType: 'positive',
+						},
 					});
 					navigate(activeDialog.navigateTo, { replace: true });
 				} else {
-					handleMessage({
-						messageText: 'Ups... something went wrong',
-						messageType: 'negative',
+					dispatchMessage({
+						type: 'SET_MESSAGE',
+						payload: {
+							messageText: 'Ups... something went wrong',
+							messageType: 'negative',
+						},
 					});
 				}
 			});

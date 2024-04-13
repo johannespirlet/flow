@@ -8,7 +8,7 @@ import { ColorRing } from 'react-loader-spinner';
 import DialogMessage from '../../../components/DialogMessage';
 import { validateName, validateArray } from '../../../helpers/validation';
 
-export default function ViewTask({ handleMessage }) {
+export default function ViewTask({ dispatchMessage }) {
 	const { id } = useParams();
 	const [taskData, setTaskData] = useState(null);
 	const [newTaskData, setNewTaskData] = useState(null);
@@ -123,9 +123,12 @@ export default function ViewTask({ handleMessage }) {
 		const assignedToError = validateArray(newTaskData.assignedTo);
 
 		if (titleError || assignedToError) {
-			handleMessage({
-				messageText: 'Please check your input and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({
 				title: titleError,
@@ -674,7 +677,7 @@ export default function ViewTask({ handleMessage }) {
 					</form>
 				)}
 				<DialogMessage
-					handleMessage={handleMessage}
+					dispatchMessage={dispatchMessage}
 					activeDialog={activeDialog}
 				/>
 			</section>

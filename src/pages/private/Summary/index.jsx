@@ -1,12 +1,13 @@
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Icon from '../../../assets/icons/Icon';
 import { ICONS } from '../../../assets/icons/icons';
 import { ColorRing } from 'react-loader-spinner';
+import { useAuth } from '../../../utils/AuthProvider';
 
 export default function Summary() {
-	const userData = useOutletContext();
+	const { userData } = useAuth();
 	const [taskData, setTaskData] = useState();
 	const [contacts, setContacts] = useState([]);
 
@@ -123,14 +124,20 @@ export default function Summary() {
 							<p>Upcoming Deadline</p>
 						</div>
 					</Link>
-					<Link to="../viewBoard?searchInput=in+progress" className={`${styles.gridItem} ${styles.flexColumn}`}>
+					<Link
+						to="../viewBoard?searchInput=in+progress"
+						className={`${styles.gridItem} ${styles.flexColumn}`}
+					>
 						<h1>
 							{taskData.filter((task) => task.section === 'In Progress').length}
 						</h1>
 
 						<h3>Tasks in Progress</h3>
 					</Link>
-					<Link to="../viewBoard?searchInput=awaiting+feedback" className={`${styles.gridItem} ${styles.flexColumn}`}>
+					<Link
+						to="../viewBoard?searchInput=awaiting+feedback"
+						className={`${styles.gridItem} ${styles.flexColumn}`}
+					>
 						<h1>
 							{
 								taskData.filter((task) => task.section === 'Awaiting Feedback')
@@ -140,7 +147,10 @@ export default function Summary() {
 						<h3>Awaiting Feedback</h3>
 					</Link>
 
-					<Link to="../viewBoard?searchInput=to+do" className={`${styles.gridItem} ${styles.flexRowCenter}`}>
+					<Link
+						to="../viewBoard?searchInput=to+do"
+						className={`${styles.gridItem} ${styles.flexRowCenter}`}
+					>
 						<div
 							className={`${styles.gridIconContainer} ${styles.standardIcon}`}
 						>
@@ -153,7 +163,10 @@ export default function Summary() {
 							<h3>To Do</h3>
 						</div>
 					</Link>
-					<Link to="../viewBoard?searchInput=done" className={`${styles.gridItem} ${styles.flexRowCenter}`}>
+					<Link
+						to="../viewBoard?searchInput=done"
+						className={`${styles.gridItem} ${styles.flexRowCenter}`}
+					>
 						<div
 							className={`${styles.gridIconContainer} ${styles.standardIcon}`}
 						>

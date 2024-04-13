@@ -13,7 +13,7 @@ import {
 	validatePrio,
 } from '../../../helpers/validation';
 
-export default function AddTask({ handleMessage }) {
+export default function AddTask({ dispatchMessage }) {
 	const navigate = useNavigate();
 	const [contacts, setContacts] = useState([]);
 	const [inputValue, setInputValue] = useState('');
@@ -168,9 +168,12 @@ export default function AddTask({ handleMessage }) {
 			dueDateError ||
 			prioError
 		) {
-			handleMessage({
-				messageText: 'Please check your input and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({
 				title: titleError,
@@ -194,15 +197,21 @@ export default function AddTask({ handleMessage }) {
 			const { status } = await response.json();
 
 			if (status === 'ok') {
-				handleMessage({
-					messageText: 'New Task added!',
-					messageType: 'positive',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'New Task added!',
+						messageType: 'positive',
+					},
 				});
 				navigate('../viewBoard');
 			} else {
-				handleMessage({
-					messageText: 'An Error occurred',
-					messageType: 'negative',
+				dispatchMessage({
+					type: 'SET_MESSAGE',
+					payload: {
+						messageText: 'An Error occurred',
+						messageType: 'negative',
+					},
 				});
 			}
 		} catch (error) {

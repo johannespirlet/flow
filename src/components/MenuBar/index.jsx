@@ -7,19 +7,19 @@ export default function MenuBar() {
   return (
     <nav className={styles.nav}>
       <ul>
-        <CustomLink to="board/summary">
+        <CustomLink to="summary">
           <Icon icon={ICONS.summary} size="1.5rem" color="white" /> Summary
         </CustomLink>
-        <CustomLink to="board/viewBoard">
+        <CustomLink to="viewBoard">
           <Icon icon={ICONS.board} size="1.5rem" color="white" /> Board
         </CustomLink>
-        <CustomLink to="board/addTask">
+        <CustomLink to="addTask">
           <Icon icon={ICONS.addTask} size="1.5rem" color="white" /> Add Task
         </CustomLink>
-        <CustomLink to="board/contacts">
+        <CustomLink to="contacts">
           <Icon icon={ICONS.contact} size="1.5rem" color="white" /> Contacts
         </CustomLink>
-        <CustomLink to="board/legalNotice">
+        <CustomLink to="legalNotice">
           <Icon icon={ICONS.info} size="1.5rem" color="white" /> Legal Notice
         </CustomLink>
       </ul>

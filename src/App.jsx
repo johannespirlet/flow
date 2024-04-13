@@ -1,8 +1,9 @@
 import './App.css';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { useReducer } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { AuthProvider } from './utils/AuthProvider';
 import Navbar from './components/Navbar';
 import Login from './features/auth/Login';
 import SignUp from './features/auth/Signup';
@@ -17,107 +18,81 @@ import ViewBoard from './pages/private/ViewBoard';
 import Contacts from './pages/private/Contacts';
 import LegalNotice from './pages/public/LegalNotice';
 import StatusMessage from './components/StatusMessage';
-import UserDetails from './utils/UserDetails';
 import AddContact from './pages/private/AddContact';
 import ViewContact from './pages/private/ViewContact';
 import Public from './layouts/Public';
 import ViewTask from './pages/private/ViewTask';
 
-export default function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(
-		localStorage.getItem('loggedIn')
-	);
-	let [message, setMessage] = useState('');
-	const navigate = useNavigate();
-
-	const handleLogin = () => {
-		window.localStorage.setItem('loggedIn', true);
-		setIsLoggedIn(true);
-		navigate('board/summary', { replace: true });
-		setMessage(
-			(message = {
-				messageText: 'Login Successful!',
-				messageType: 'positive',
-			})
-		);
-	};
-
-	const handleLogout = () => {
-		localStorage.clear();
-		navigate('home');
-		setIsLoggedIn(false);
-		setMessage(
-			(message = {
-				messageText: 'Logout Successful!',
-				messageType: 'positive',
-			})
-		);
-	};
-
-	const handleTimeout = () => {
-		localStorage.clear();
-		navigate('auth/sign-in');
-		setIsLoggedIn(false);
-		setMessage(
-			(message = {
-				messageText: 'Timed Out! Please Log Back In.',
+const messageReducer = (state, action) => {
+	switch (action.type) {
+		case 'SET_MESSAGE':
+			return {
+				...state,
+				messageText: action.payload.messageText,
+				messageType: action.payload.messageType,
+			};
+		case 'CLEAR_MESSAGE':
+			return {
+				...state,
+				messageText: '',
 				messageType: '',
-			})
-		);
-	};
+			};
+		default:
+			return state;
+	}
+};
+
+export default function App() {
+	const [messageState, dispatchMessage] = useReducer(messageReducer, '');
 
 	return (
-		<>
-			<Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+		<AuthProvider dispatchMessage={dispatchMessage}>
+			<Navbar />
 			<Routes>
 				<Route path="/" element={<AuthRoutes />}>
+					<Route path="summary" element={<Summary />} />
 					<Route
-						path="board/"
-						element={<UserDetails handleLogout={handleTimeout} />}
-					>
-						<Route path="summary" element={<Summary />} />
-						<Route
-							path="viewTask/:id"
-							element={<ViewTask handleMessage={setMessage} />}
-						/>
-						<Route path="viewBoard" element={<ViewBoard />} />
-						<Route
-							path="addTask"
-							element={<AddTask handleMessage={setMessage} />}
-						/>
-						<Route path="contacts" element={<Contacts />} />
-						<Route
-							path="contacts/addContact"
-							element={<AddContact handleMessage={setMessage} />}
-						/>
-						<Route
-							path="contacts/:id"
-							element={<ViewContact handleMessage={setMessage} />}
-						/>
-						<Route path="settings" element={<Settings />} />
-						<Route path="legalNotice" element={<LegalNotice />} />
-					</Route>
+						path="viewTask/:id"
+						element={<ViewTask dispatchMessage={dispatchMessage} />}
+					/>
+					<Route path="viewBoard" element={<ViewBoard />} />
+					<Route
+						path="addTask"
+						element={<AddTask dispatchMessage={dispatchMessage} />}
+					/>
+					<Route path="contacts" element={<Contacts />} />
+					<Route
+						path="contacts/addContact"
+						element={<AddContact dispatchMessage={dispatchMessage} />}
+					/>
+					<Route
+						path="contacts/:id"
+						element={<ViewContact dispatchMessage={dispatchMessage} />}
+					/>
+					<Route path="settings" element={<Settings />} />
+					<Route path="legalNotice" element={<LegalNotice />} />
 				</Route>
-				<Route path="public/" element={<Public />}>
+				<Route path="public/*" element={<Public />}>
 					<Route path="home" element={<Home />} />
 					<Route path="legalNotice" element={<LegalNotice />} />
 				</Route>
-				<Route path="auth/">
+				<Route path="auth/*">
 					<Route
 						path="sign-in"
-						element={
-							<Login handleLogin={handleLogin} handleMessage={setMessage} />
-						}
+						element={<Login dispatchMessage={dispatchMessage} />}
 					/>
 					<Route
 						path="sign-up"
-						element={<SignUp handleMessage={setMessage} />}
+						element={<SignUp dispatchMessage={dispatchMessage} />}
 					/>
-					<Route path="reset" element={<Reset handleMessage={setMessage} />} />
+					<Route
+						path="reset"
+						element={<Reset dispatchMessage={dispatchMessage} />}
+					/>
 				</Route>
 				<Route path="*" element={<NotFound />} />
 			</Routes>
-			<StatusMessage message={message} />
-		</>
+			<StatusMessage message={messageState} />
+		</AuthProvider>
 	);
 }

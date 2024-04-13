@@ -1,4 +1,5 @@
-import { useOutletContext, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../../utils/AuthProvider';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 import DialogMessage from '../../../components/DialogMessage';
@@ -10,9 +11,9 @@ import {
 	validatePassword,
 } from '../../../helpers/validation';
 
-export default function ViewContact({ handleMessage }) {
+export default function ViewContact({ dispatchMessage }) {
 	const { id } = useParams();
-	const userData = useOutletContext();
+	const { userData } = useAuth();
 	const [activeDialog, setActiveDialog] = useState('');
 	const [isEditable, setIsEditable] = useState(false);
 	const [formData, setFormData] = useState({});
@@ -68,9 +69,12 @@ export default function ViewContact({ handleMessage }) {
 		const passwordError = validatePassword(newFormData.password);
 
 		if (fnameError || lnameError || emailError || passwordError) {
-			handleMessage({
-				messageText: 'Please check your input and try again',
-				messageType: 'negative',
+			dispatchMessage({
+				type: 'SET_MESSAGE',
+				payload: {
+					messageText: 'Please check your input and try again',
+					messageType: 'negative',
+				},
 			});
 			setFormErrors({
 				fname: fnameError,
@@ -343,7 +347,7 @@ export default function ViewContact({ handleMessage }) {
 				)}
 			</div>
 			<DialogMessage
-				handleMessage={handleMessage}
+				dispatchMessage={dispatchMessage}
 				activeDialog={activeDialog}
 			/>
 		</>
