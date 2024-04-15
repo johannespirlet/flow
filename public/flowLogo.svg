@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="288px" height="71px" viewBox="0 0 288 71" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Artboard</title>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" opacity="0" x="0" y="0" width="288" height="71"></rect>
+        <path d="M96.4215243,59.4079925 C113.845508,59.6205011 136.23324,59.6205011 163.584719,59.4079925 C231.173007,55.42294 214.7302,4.4315994 191.882892,7.27811582 C169.035583,10.1246322 170.575293,64.2609756 240.726923,56.9871765 C257.996231,55.9045938 272.24126,49.0011318 283.46201,36.2767904" id="Path" stroke="#212529" stroke-width="2"></path>
+        <text id="Flow" font-family="ShreeDev0714-Bold, Shree Devanagari 714" font-size="77" font-weight="bold" letter-spacing="1.32758621" fill="#FFFFFF">
+            <tspan x="4.03178411" y="63">Flow</tspan>
+        </text>
+        <g id="Task" transform="translate(242.9798, 52.9134) rotate(-2) translate(-242.9798, -52.9134)translate(224.9985, 41.9134)">
+            <rect id="Rectangle" stroke="#212529" stroke-width="0.8" fill="#FFFFFF" x="0.4" y="0.4" width="30.2" height="21.2" rx="4"></rect>
+            <line x1="5.96153846" y1="5.89285714" x2="25.8333333" y2="5.89285714" id="Line-Copy" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="5.96153846" y1="5.10714286" x2="25.8333333" y2="5.10714286" id="Line-Copy-2" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="5.96153846" y1="9.82142857" x2="25.8333333" y2="9.82142857" id="Line-2" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="5.96153846" y1="12.1785714" x2="25.8333333" y2="12.1785714" id="Line-2-Copy" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="5.96153846" y1="14.5357143" x2="25.8333333" y2="14.5357143" id="Line-2-Copy-2" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <line x1="5.96153846" y1="16.8928571" x2="25.8333333" y2="16.8928571" id="Line-2-Copy-3" stroke="#212529" stroke-width="0.8" stroke-linecap="square"></line>
+            <g id="Checked" transform="translate(27.9627, 14.139)">
+                <ellipse id="Oval" fill="#198754" cx="7.2920354" cy="0.744029465" rx="1" ry="1"></ellipse>
+                <ellipse id="Oval-Copy" fill="#198754" cx="0.707964602" cy="4.46417679" rx="1" ry="1"></ellipse>
+                <path d="M0.755083236,4.51609675 C1.75186158,6.46290611 2.4959173,7.26532709 2.98725039,6.92335969 C3.72425004,6.41040859 6.67877043,1.86007366 7.30265054,0.697613175" id="Path-3" stroke="#198754" stroke-width="1.456"></path>
+            </g>
+        </g>
+        <g id="Task-Copy" transform="translate(176, 56.5) rotate(4) translate(-176, -56.5)translate(165, 49)" stroke="#212529" stroke-width="0.56">
+            <rect id="Rectangle" fill="#FFFFFF" x="0.28" y="0.28" width="21.44" height="14.44" rx="2.8"></rect>
+            <line x1="4.23076923" y1="4.01785714" x2="17" y2="4.01785714" id="Line-Copy" stroke-linecap="square"></line>
+            <line x1="4.23076923" y1="3.48214286" x2="17" y2="3.48214286" id="Line-Copy-2" stroke-linecap="square"></line>
+            <line x1="4.28205128" y1="7.26785714" x2="18.3846154" y2="7.26785714" id="Line-2" stroke-linecap="square"></line>
+            <line x1="4.28205128" y1="9.26785714" x2="18.3846154" y2="9.26785714" id="Line-2-Copy-2" stroke-linecap="square"></line>
+            <line x1="4.28205128" y1="11.2678571" x2="15.5512821" y2="11.25" id="Line-2-Copy-3" stroke-linecap="square"></line>
+        </g>
+        <g id="Task-Copy-2" transform="translate(202, 8) rotate(-150) translate(-202, -8)translate(197, 4)" stroke="#212529" stroke-width="0.252">
+            <rect id="Rectangle" fill="#FFFFFF" x="0.126" y="0.126" width="9.748" height="7.748" rx="1.26"></rect>
+            <line x1="1.92307692" y1="2.14285714" x2="8.33333333" y2="2.14285714" id="Line-Copy" stroke-linecap="square"></line>
+            <line x1="1.92307692" y1="1.85714286" x2="8.33333333" y2="1.85714286" id="Line-Copy-2" stroke-linecap="square"></line>
+            <line x1="1.92307692" y1="3.57142857" x2="8.33333333" y2="3.57142857" id="Line-2" stroke-linecap="square"></line>
+            <line x1="1.92307692" y1="4.42857143" x2="8.33333333" y2="4.42857143" id="Line-2-Copy" stroke-linecap="square"></line>
+            <line x1="1.92307692" y1="5.28571429" x2="8.33333333" y2="5.28571429" id="Line-2-Copy-2" stroke-linecap="square"></line>
+            <line x1="1.92307692" y1="6.14285714" x2="8.33333333" y2="6.14285714" id="Line-2-Copy-3" stroke-linecap="square"></line>
+        </g>
+        <polygon id="Path-2" stroke="#212529" fill="#212529" points="285.758051 33.3395588 271.206505 39.2180267 280.161546 39.2180267 283.46201 45.1015752"></polygon>
+    </g>
+</svg>

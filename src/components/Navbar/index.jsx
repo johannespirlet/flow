@@ -1,20 +1,17 @@
 import styles from './styles.module.css';
 import { Link } from 'react-router-dom';
-import CustomLink from '../CustomLink';
 import { ICONS } from '../../assets/icons/icons.js';
 import Icon from '../../assets/icons/Icon.jsx';
 import { useAuth } from '../../utils/AuthProvider.jsx';
+import CustomLink from '../CustomLink/index.jsx';
 
 export default function Navbar() {
-
 	const { isLoggedIn, logout } = useAuth();
 
 	return (
 		<nav className={styles.nav}>
-			<Link to="summary" className={styles.siteTitle}>
-				Flow
-			</Link>
-			<ul>
+			<Link to="summary" className={styles.siteTitle} />
+			<ul className={styles.navLinks}>
 				{isLoggedIn ? (
 					<>
 						<CustomLink to="settings">

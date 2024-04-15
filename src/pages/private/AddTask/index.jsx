@@ -221,7 +221,7 @@ export default function AddTask({ dispatchMessage }) {
 	return (
 		<>
 			<title>Add a Task ..and Flow</title>
-			<h1 className={styles.title}>Add a Task</h1>
+			<h1 className={styles.title}>New Task</h1>
 			<form
 				onSubmit={handleTaskSubmission}
 				className={styles.formContainer}

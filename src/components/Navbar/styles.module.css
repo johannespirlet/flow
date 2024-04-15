@@ -1,10 +1,20 @@
 .siteTitle {
-	font-size: 2rem;
+	background-image: url('../../../flowLogo.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	width: 12rem;
 }
 
 .nav {
 	height: 4rem;
-	background-color: #333;
+	background: rgb(9, 106, 236);
+	background: linear-gradient(
+		90deg,
+		rgba(9, 106, 236, 1) -20%,
+		rgba(19, 74, 149, 1) 36%,
+		rgba(16, 44, 87, 1) 79%
+	);
 	color: white;
 	display: flex;
 	justify-content: space-between;
@@ -28,4 +38,13 @@
 	display: flex;
 	align-items: center;
 	padding: 0.25rem;
+}
+
+.navLinks a:hover,
+.navLinks a:focus-visible {
+	background-color: #0f55be;
+}
+
+.navLinks li:global(.activeLink) {
+	background-color: #134a95;
 }

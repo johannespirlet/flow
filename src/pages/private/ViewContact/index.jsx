@@ -138,7 +138,7 @@ export default function ViewContact({ dispatchMessage }) {
 						noValidate
 					>
 						{userData.userType === 'Admin' && (
-							<div className={styles.formRow}>
+							<div className={`${styles.formRow} ${styles.radioRow}`}>
 								Select a Usertype
 								<div>
 									<input

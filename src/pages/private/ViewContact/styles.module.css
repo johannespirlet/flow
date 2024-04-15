@@ -60,7 +60,7 @@
   margin: 0 7px 4px 0;
 }
 
-.formRow:not(:first-child) div {
+.formRow:not(.radioRow) div {
   flex: 1;
 }
 

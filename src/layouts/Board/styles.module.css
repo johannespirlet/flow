@@ -1,5 +1,4 @@
 .boardContainer {
-	background: #ececec;
 	display: flex;
 }
 
@@ -16,4 +15,5 @@
 .contentContainer {
 	padding: 2rem;
 	width: calc(100svw - 14rem);
+	background-color: var(--bs-white);
 }
