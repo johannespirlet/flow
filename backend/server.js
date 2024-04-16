@@ -12,11 +12,19 @@ import './models/tasks.js';
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-    origin: 'https://flow-git-vercel-johannespirlets-projects.vercel.app',
-    methods: ['GET', 'POST'], // Erlaube alle erforderlichen Methoden
-    credentials: true, // falls erforderlich
-}));
+app.use(
+	cors({
+		origin: 'https://flow-git-vercel-johannespirlets-projects.vercel.app',
+		methods: ['GET', 'POST'], // Erlaube alle erforderlichen Methoden
+		credentials: true, // falls erforderlich
+	})
+);
+app.use((req, res, next) => {
+	res.setHeader('Vary', 'Origin');
+	next();
+});
+app.options('*', cors());
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
