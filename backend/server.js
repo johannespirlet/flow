@@ -3,8 +3,8 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+//import bcrypt from 'bcryptjs';
+//import jwt from 'jsonwebtoken';
 //import nodemailer from "nodemailer"; //vorerst auskommentiert
 
 import './models/user.js';
@@ -48,7 +48,7 @@ app.listen(port, () => {
 	console.log(`Server läuft auf PORT ${port}`);
 });
 
-app.post('/register', async (req, res) => {
+/* app.post('/register', async (req, res) => {
 	const { fname, lname, email, password, userType, secretKey } = req.body;
 	const encryptedPassword = await bcrypt.hash(password, 10);
 
@@ -174,7 +174,7 @@ app.post('/forgot-password', async (req, res) => {
             console.log("Email sent: " + info.response);
             return res.json({ status: "ok", data: "E-Mail sent with new Password Link" });
           }
-        }); */
+        }); 
 		return res.json({
 			status: 'ok',
 			data: 'Nodemailer is disabled. The reset pw-link is logged in the terminal/console',
@@ -435,3 +435,4 @@ app.post('/updateTask', async (req, res) => {
 		res.send({ status: 'error' });
 	}
 });
+ */
