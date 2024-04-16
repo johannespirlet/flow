@@ -52,7 +52,7 @@ export default function SignUp({ dispatchMessage }) {
 			return;
 		}
 
-		fetch('https://flow-eta-bay.vercel.app/api/register', {
+		fetch('https://flow-git-vercel-johannespirlets-projects.vercel.app/api/register', {
 			method: 'POST',
 			crossDomain: true,
 			headers: {
