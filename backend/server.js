@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(
 	cors({
-		origin: 'https://flow-git-vercel-johannespirlets-projects.vercel.app',
+		origin: 'https://flow-git-vercel-johannespirlets-projects.vercel.app/',
 		methods: ['GET', 'POST'], // Erlaube alle erforderlichen Methoden
 		credentials: true, // falls erforderlich
 	})

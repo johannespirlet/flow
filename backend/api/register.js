@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import User from '../server.js';
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://flow-git-vercel-johannespirlets-projects.vercel.app/auth/sign-up');
+    res.setHeader('Access-Control-Allow-Origin', 'https://flow-git-vercel-johannespirlets-projects.vercel.app/');
     if (req.method === 'POST') {
         const { fname, lname, email, password, userType, secretKey } = req.body;
         const encryptedPassword = await bcrypt.hash(password, 10);

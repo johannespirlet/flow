@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { User } from './models/user.js';
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://flow-git-vercel-johannespirlets-projects.vercel.app/auth/sign-in');
+    res.setHeader('Access-Control-Allow-Origin', 'https://flow-git-vercel-johannespirlets-projects.vercel.app/');
     if (req.method === 'POST') {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
