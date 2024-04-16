@@ -52,7 +52,7 @@ export default function SignUp({ dispatchMessage }) {
 			return;
 		}
 
-		fetch('https://flow-git-vercel-johannespirlets-projects.vercel.app/api/register', {
+		fetch('https://flow-git-vercel-johannespirlets-projects.vercel.app/backend/api/register', {
 			method: 'POST',
 			crossDomain: true,
 			headers: {

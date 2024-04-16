@@ -44,7 +44,7 @@ export default function Login({ dispatchMessage }) {
 			body: JSON.stringify(requestBody),
 		};
 
-		fetch('https://flow-git-vercel-johannespirlets-projects.vercel.app/api/login-user', requestOptions)
+		fetch('https://flow-git-vercel-johannespirlets-projects.vercel.app/backend/api/login-user', requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.status === 'ok') {
