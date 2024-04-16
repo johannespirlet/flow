@@ -14,7 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(cors({
     origin: 'https://flow-git-vercel-johannespirlets-projects.vercel.app',
-    credentials: true,
+    methods: ['GET', 'POST'], // Erlaube alle erforderlichen Methoden
+    credentials: true, // falls erforderlich
 }));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
