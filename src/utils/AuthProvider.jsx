@@ -11,7 +11,7 @@ export const AuthProvider = ({ children, dispatchMessage }) => {
 
 	const fetchUserData = async () => {
 		try {
-			const response = await fetch('http://localhost:5000/userData', {
+			const response = await fetch('https://flow-eta-bay.vercel.app/api/userData', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

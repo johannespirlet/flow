@@ -9,7 +9,7 @@ export default function Reset({ dispatchMessage }) {
 		e.preventDefault();
 
 		try {
-			const response = await fetch('http://localhost:5000/forgot-password', {
+			const response = await fetch('https://flow-eta-bay.vercel.app/api/forgot-password', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

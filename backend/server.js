@@ -27,11 +27,13 @@ mongoose
 	})
 	.catch((error) => console.log(error));
 
-const User = mongoose.model('UserInfo');
-const Task = mongoose.model('TaskInfo');
+export const User = mongoose.model('UserInfo');
+export const Task = mongoose.model('TaskInfo');
 
-app.listen(process.env.PORT || 5000, () => {
-	console.log('Server läuft auf PORT 5000');
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+	console.log(`Server läuft auf PORT ${port}`);
 });
 
 app.post('/register', async (req, res) => {

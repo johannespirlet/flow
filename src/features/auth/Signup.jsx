@@ -52,7 +52,7 @@ export default function SignUp({ dispatchMessage }) {
 			return;
 		}
 
-		fetch('http://localhost:5000/register', {
+		fetch('https://flow-eta-bay.vercel.app/api/register', {
 			method: 'POST',
 			crossDomain: true,
 			headers: {

@@ -44,7 +44,7 @@ export default function Login({ dispatchMessage }) {
 			body: JSON.stringify(requestBody),
 		};
 
-		fetch('http://localhost:5000/login-user', requestOptions)
+		fetch('https://flow-eta-bay.vercel.app/api/login-user', requestOptions)
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.status === 'ok') {
